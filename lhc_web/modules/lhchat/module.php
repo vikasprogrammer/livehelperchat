@@ -271,6 +271,7 @@ $ViewList['cannedmsgedit'] = array(
     'functions' => array( 'administratecannedmsg' )
 );
 
+
 $FunctionList['use'] = array('explain' => 'General chat usage permission');
 $FunctionList['singlechatwindow'] = array('explain' =>'Allow user to use single chat window functionality');
 $FunctionList['allowchattabs'] = array('explain' =>'Allow user to user chat rooms functionality');
@@ -282,6 +283,7 @@ $FunctionList['allowblockusers'] = array('explain' =>'Allow user to block users'
 $FunctionList['administrateconfig'] = array('explain' =>'Allow to change chat config');
 $FunctionList['allowclearonlinelist'] = array('explain' =>'Allow use to clean online users list');
 $FunctionList['administratecannedmsg'] = array('explain' =>'Allow use change canned messages');
+
 
 
 ?>

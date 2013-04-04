@@ -5,8 +5,9 @@ class erLhcoreClassModelDepartament {
     public function getState()
    {
        return array(
-               'id'       => $this->id,
-               'name'     => $this->name
+               'id'       		=> $this->id,
+               'name'     		=> $this->name,
+               'instance_id'    => $this->instance_id,
        );
    }
 
@@ -120,6 +121,7 @@ class erLhcoreClassModelDepartament {
 
     public $id = null;
     public $name = '';
+    public $instance_id = 0;
 }
 
 ?>
