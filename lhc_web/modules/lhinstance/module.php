@@ -26,6 +26,12 @@ $ViewList['delete'] = array(
 		'functions' => array( 'delete' )
 );
 
+$ViewList['assigntouser'] = array(
+		'script' => 'assigntouser.php',
+		'params' => array('user_id'),
+		'functions' => array( 'manageinstances' )
+);
+
 $FunctionList['manageinstances'] = array('explain' =>'Allow manage instances');
 
 ?>

@@ -10,7 +10,7 @@ CREATE TABLE `lh_instance` (
   `remote_instance_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 ALTER TABLE `lh_departament`
 ADD `instance_id` int NOT NULL,
@@ -18,4 +18,21 @@ COMMENT='';
 
 ALTER TABLE `lh_users`
 ADD `all_instances` tinyint(1) NOT NULL,
+COMMENT='';
+
+CREATE TABLE `lh_instance_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `instance_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `instance_id` (`instance_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB;
+
+ALTER TABLE `lh_chat`
+ADD `instance_id` int(11) NOT NULL,
+COMMENT='';
+
+ALTER TABLE `lh_transfer`
+ADD `to_instance_id` int(11) NOT NULL,
 COMMENT='';

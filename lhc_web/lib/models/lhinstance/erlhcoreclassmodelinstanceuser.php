@@ -1,6 +1,6 @@
 <?php
 
-class erLhcoreClassModelChatInstanceUser {
+class erLhcoreClassModelInstanceUser {
 
    public function getState()
    {
@@ -20,16 +20,16 @@ class erLhcoreClassModelChatInstanceUser {
    }
 
    public static function fetch($chat_id) {
-       	 $chat = erLhcoreClassChat::getSession()->load( 'erLhcoreClassModelChatInstanceUser', (int)$chat_id );
+       	 $chat = erLhcoreClassInstance::getSession()->load( 'erLhcoreClassModelInstanceUser', (int)$chat_id );
        	 return $chat;
    }
 
    public function saveThis() {
-       	 erLhcoreClassChat::getSession()->saveOrUpdate($this);
+       	 erLhcoreClassInstance::getSession()->saveOrUpdate($this);
    }
 
    public function updateThis() {
-       	 erLhcoreClassChat::getSession()->update($this);
+       	 erLhcoreClassInstance::getSession()->update($this);
    }
 
    public function setIP()
@@ -41,15 +41,37 @@ class erLhcoreClassModelChatInstanceUser {
 
        switch ($var) {
 
-       	case 'is_operator_typing':
-       		   $this->is_operator_typing = $this->operator_typing > (time()-6); // typing is considered if status did not changed for 10 seconds
-       		   return $this->is_operator_typing;
+       	case 'instance':
+       		   try {
+       		   		$this->instance = erLhcoreClassModelInstance::fetch($this->instance_id);
+       		   } catch (Exception $e) {
+       		   		$this->instance = false;
+       		   }
+       		   return $this->instance;
        		break;
 
        	default:
        		break;
        }
 
+   }
+
+   public static function removeInstanceFromUser($instance, $user_id) {
+	   	$session = erLhcoreClassInstance::getSession();
+	   	$q = $session->database->createDeleteQuery();
+	   	$q->deleteFrom( 'lh_instance_user' )
+	   	->where( $q->expr->eq( 'user_id', $q->bindValue( $user_id ) ),$q->expr->eq( 'instance_id', $q->bindValue( $instance ) ) );
+	   	$stmt = $q->prepare();
+	   	$stmt->execute();
+   }
+
+   public static function removeInstancesFromUser ( $user_id ) {
+	   	$session = erLhcoreClassInstance::getSession();
+	   	$q = $session->database->createDeleteQuery();
+	   	$q->deleteFrom( 'lh_instance_user' )
+	   	->where( $q->expr->eq( 'user_id', $q->bindValue( $user_id ) ) );
+	   	$stmt = $q->prepare();
+	   	$stmt->execute();
    }
 
    public $id = null;

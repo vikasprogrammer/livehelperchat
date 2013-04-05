@@ -32,6 +32,25 @@ class erLhcoreClassModelDepartament {
    		return $this->name;
    }
 
+   public function __get($var) {
+
+       switch ($var) {
+
+       	case 'instance':
+       		   try {
+       		   		$this->instance = erLhcoreClassModelInstance::fetch($this->instance_id);
+       		   } catch (Exception $e) {
+       		   		$this->instance = false;
+       		   }
+       		   return $this->instance;
+       		break;
+
+       	default:
+       		break;
+       }
+
+   }
+
    public static function getCount($params = array())
    {
        $session = erLhcoreClassDepartament::getSession();

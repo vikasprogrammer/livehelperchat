@@ -38,6 +38,12 @@ $def->properties['transfer_to_user_id']->columnName   = 'transfer_to_user_id';
 $def->properties['transfer_to_user_id']->propertyName = 'transfer_to_user_id';
 $def->properties['transfer_to_user_id']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_INT;
 
+// To what instance chat is transfering
+$def->properties['to_instance_id'] = new ezcPersistentObjectProperty();
+$def->properties['to_instance_id']->columnName   = 'to_instance_id';
+$def->properties['to_instance_id']->propertyName = 'to_instance_id';
+$def->properties['to_instance_id']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_INT;
+
 return $def;
 
 ?>

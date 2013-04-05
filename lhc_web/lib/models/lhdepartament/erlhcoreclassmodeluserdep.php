@@ -28,6 +28,25 @@ class erLhcoreClassModelUserDep {
 					return $this->user;
 				break;
 
+			case 'department':
+						try {
+							$this->department = erLhcoreClassModelDepartament::fetch($this->dep_id);
+						} catch (Exception $e) {
+							$this->department = false;
+						}
+						return $this->department;
+					break;
+
+			case 'instance':
+						$this->instance = false;
+
+						if ($this->department !== false) {
+							$this->instance = $this->department->instance;
+						}
+
+						return $this->instance;
+					break;
+
 			default:
 				break;
 		}

@@ -5,14 +5,14 @@ $tpl = erLhcoreClassTemplate::getInstance('lhuser/edit.tpl.php');
 $UserData = erLhcoreClassUser::getSession()->load( 'erLhcoreClassModelUser', (int)$Params['user_parameters']['user_id'] );
 
 if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
-{    
+{
    $definition = array(
         'Password' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
         ),
         'Password1' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
-        ),    
+        ),
         'Email' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'validate_email'
         ),
@@ -21,26 +21,32 @@ if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
         ),
         'Surname' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
-        ),  
+        ),
         'Username' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
-        ),    		
+        ),
 		'UserDisabled' => new ezcInputFormDefinitionElement(
 				ezcInputFormDefinitionElement::OPTIONAL, 'boolean'
 		),
 		'HideMyStatus' => new ezcInputFormDefinitionElement(
 				ezcInputFormDefinitionElement::OPTIONAL, 'boolean'
-		),    		
+		),
+		'all_departments' => new ezcInputFormDefinitionElement(
+				ezcInputFormDefinitionElement::OPTIONAL, 'boolean'
+		),
+		'all_instances' => new ezcInputFormDefinitionElement(
+				ezcInputFormDefinitionElement::OPTIONAL, 'boolean'
+		),
 		'DefaultGroup' => new ezcInputFormDefinitionElement(
 				ezcInputFormDefinitionElement::OPTIONAL, 'int',
 				null,
 				FILTER_REQUIRE_ARRAY
 		)
     );
-  
+
     $form = new ezcInputForm( INPUT_POST, $definition );
     $Errors = array();
-        
+
     if ( !$form->hasValidData( 'Username' ) ) {
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Please enter username!');
     }  elseif ( $form->hasValidData( 'Username' ) && $form->Username != $UserData->username && !erLhcoreClassModelUser::userExists($form->Username) ) {
@@ -48,39 +54,39 @@ if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
     } elseif ( $form->hasValidData( 'Username' ) && $form->Username != $UserData->username) {
     	$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','User exists!');
     }
-    
+
     if ( !$form->hasValidData( 'Email' ) )
     {
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Wrong email address');
-    } 
-    
+    }
+
     if ( !$form->hasValidData( 'Name' ) || $form->Name == '' )
     {
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Please enter name');
     }
-    
+
     if ( !$form->hasValidData( 'Surname' ) || $form->Surname == '')
     {
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Please enter surname');
     }
-    
+
     if ( $form->hasInputField( 'Password' ) && (!$form->hasInputField( 'Password1' ) || $form->Password != $form->Password1  ) ) // check for optional field
     {
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Passwords mismatch');
     }
-    
+
     if ( $form->hasValidData( 'DefaultGroup' ) ) {
     	$UserData->user_groups_id = $form->DefaultGroup;
     } else {
     	$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Please choose default user group');
     }
-        
+
     if ( $form->hasValidData( 'UserDisabled' ) && $form->UserDisabled == true )
     {
     	$UserData->disabled = 1;
     } else {
     	$UserData->disabled = 0;
-    }   
+    }
 
     if ( $form->hasValidData( 'HideMyStatus' ) && $form->HideMyStatus == true )
     {
@@ -89,8 +95,23 @@ if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
     	$UserData->hide_online = 0;
     }
 
+    if ( $form->hasValidData( 'all_instances' ) && $form->all_instances == true )
+    {
+    	$UserData->all_instances = 1;
+    } else {
+    	$UserData->all_instances = 0;
+    }
+
+    if ( $form->hasValidData( 'all_departments' ) && $form->all_departments == true )
+    {
+    	$UserData->all_departments = 1;
+    } else {
+    	$UserData->all_departments = 0;
+    }
+
+
     if (count($Errors) == 0)
-    {     
+    {
         // Update password if neccesary
         if ($form->hasInputField( 'Password' ) && $form->hasInputField( 'Password1' ) && $form->Password != '')
         {
@@ -117,42 +138,46 @@ if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
         $CacheManager = erConfigClassLhCacheConfig::getInstance();
         $CacheManager->expireCache();
 
-        if (isset($_POST['Save_account'])) {        
+        if (isset($_POST['Save_account'])) {
             erLhcoreClassModule::redirect('user/userlist');
             exit;
         } else {
             $tpl->set('updated',true);
         }
-                
+
     }  else {
         $tpl->set('errors',$Errors);
     }
 }
 
-if (isset($_POST['UpdateDepartaments_account']))
-{        
-   $globalDepartament = array();
-   if (isset($_POST['all_departments']) && $_POST['all_departments'] == 'on') {
-       $UserData->all_departments = 1;
-       $globalDepartament[] = 0;
-   } else {
-       $UserData->all_departments = 0;
-   }    
+if (isset($_POST['RemoveSelectedInstance'])) {
+	if (isset($_POST['UserInstances']) && count($_POST['UserInstances']) > 0) {
+		$globalDepartament = array_merge($_POST['UserInstances'],$globalDepartament);
+		foreach ($_POST['UserInstances'] as $instanceID) {
+			erLhcoreClassModelInstanceUser::removeInstanceFromUser($instanceID, $UserData->id);
+		}
+	}
+	$tpl->set('account_updated_instances','done');
+}
 
-   erLhcoreClassUser::getSession()->update($UserData);
-   
-   if (isset($_POST['UserDepartament']) && count($_POST['UserDepartament']) > 0)
-   {
-       $globalDepartament = array_merge($_POST['UserDepartament'],$globalDepartament);       
+if (isset($_POST['RemoveSelectedDepartments']))
+{
+   $globalDepartament = array();
+
+   if ($UserData->all_departments == 1) {
+   		$globalDepartament[] = 0;
    }
-      
-   if (count($globalDepartament) > 0)
-   {
+
+   if (isset($_POST['UserDepartament']) && count($_POST['UserDepartament']) > 0) {
+       $globalDepartament = array_merge($_POST['UserDepartament'],$globalDepartament);
+   }
+
+   if (count($globalDepartament) > 0) {
        erLhcoreClassUserDep::addUserDepartaments($globalDepartament,$Params['user_parameters']['user_id'],$UserData);
    } else {
        erLhcoreClassUserDep::addUserDepartaments(array(),$Params['user_parameters']['user_id'],$UserData);
    }
-   
+
    $tpl->set('account_updated_departaments','done');
 }
 

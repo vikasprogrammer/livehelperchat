@@ -20,6 +20,10 @@ class erLhcoreClassModelInstance {
        }
    }
 
+   public function __toString(){
+   		return $this->name;
+   }
+
    public static function fetch($chat_id) {
        	 $chat = erLhcoreClassInstance::getSession()->load( 'erLhcoreClassModelInstance', (int)$chat_id );
        	 return $chat;
