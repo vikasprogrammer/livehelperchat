@@ -20,6 +20,12 @@ $ViewList['editinstance'] = array(
 		'functions' => array( 'manageinstances' )
 );
 
+$ViewList['delete'] = array(
+		'script' => 'delete.php',
+		'params' => array('instance_id'),
+		'functions' => array( 'delete' )
+);
+
 $FunctionList['manageinstances'] = array('explain' =>'Allow manage instances');
 
 ?>

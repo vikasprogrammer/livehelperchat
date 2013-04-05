@@ -2,7 +2,7 @@
 
 $tpl = erLhcoreClassTemplate::getInstance('lhinstance/editinstance.tpl.php');
 
-$Departament = erLhcoreClassModelInstance::fetch((int)$Params['user_parameters']['instance_id']);
+$Instance = erLhcoreClassModelInstance::fetch((int)$Params['user_parameters']['instance_id']);
 
 if ( isset($_POST['Cancel_instance']) ) {
     erLhcoreClassModule::redirect('instance/listinstances');
@@ -17,6 +17,9 @@ if (isset($_POST['Update_instance']) || isset($_POST['Save_instance'])  )
         ),
    		'RemoteInstanceID' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'int'
+        ),
+   		'InstanceActive' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'boolean'
         )
     );
 
@@ -25,18 +28,25 @@ if (isset($_POST['Update_instance']) || isset($_POST['Save_instance'])  )
 
     if ( !$form->hasValidData( 'Name' ) || $form->Name == '' )
     {
-        $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('departament/edit','Please enter departament name');
+        $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('departament/edit','Please enter instance name');
     }
 
     if ( $form->hasValidData( 'RemoteInstanceID' )  )
     {
-    	$Departament->remote_instance_id = $form->RemoteInstanceID;
+    	$Instance->remote_instance_id = $form->RemoteInstanceID;
     }
+
+    if ( $form->hasValidData( 'InstanceActive' ) &&  $form->InstanceActive == true ) {
+    	$Instance->status = 1;
+    } else {
+    	$Instance->status = 0;
+    }
+
 
     if (count($Errors) == 0)
     {
-        $Departament->name = $form->Name;
-        $Departament->saveThis();
+        $Instance->name = $form->Name;
+        $Instance->saveThis();
 
         if (isset($_POST['Save_instance'])) {
             erLhcoreClassModule::redirect('instance/listinstances');
@@ -50,13 +60,13 @@ if (isset($_POST['Update_instance']) || isset($_POST['Save_instance'])  )
     }
 }
 
-$tpl->set('instance',$Departament);
+$tpl->set('instance',$Instance);
 
 $Result['content'] = $tpl->fetch();
 
 $Result['path'] = array(
 array('url' => erLhcoreClassDesign::baseurl('system/configuration'),'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','System configuration')),
-array('url' => erLhcoreClassDesign::baseurl('departament/departaments'),'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','departments')),
-array('title' => erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Edit department').' - '.$Departament->name),);
+array('url' => erLhcoreClassDesign::baseurl('instance/listinstances'),'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Instances')),
+array('title' => erTranslationClassLhTranslation::getInstance()->getTranslation('instance/edit','Edit instance').' - '.$Instance->name),);
 
 ?>

@@ -33,6 +33,10 @@ class erLhcoreClassModelInstance {
        	 erLhcoreClassInstance::getSession()->update($this);
    }
 
+   public function removeThis() {
+       	 erLhcoreClassInstance::getSession()->delete($this);
+   }
+
    public function setIP()
    {
        $this->ip = $_SERVER['REMOTE_ADDR'];
@@ -53,8 +57,8 @@ class erLhcoreClassModelInstance {
 
    }
 
-   const STATUS_ACTIVE = 0;
-   const STATUS_IN_ACTIVE = 1;
+   const STATUS_ACTIVE = 1;
+   const STATUS_IN_ACTIVE = 0;
 
    public $id = null;
    public $name = '';
