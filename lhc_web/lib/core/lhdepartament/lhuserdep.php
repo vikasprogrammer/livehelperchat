@@ -1,6 +1,6 @@
 <?php
 
-class erLhcoreClassUserDep{
+class erLhcoreClassUserDep {
 
    function __construct()
    {
@@ -24,9 +24,7 @@ class erLhcoreClassUserDep{
 
          $stmt = $db->prepare('SELECT lh_userdep.dep_id FROM lh_userdep WHERE user_id = :user_id ORDER BY id ASC');
          $stmt->bindValue( ':user_id',$userID);
-
          $stmt->execute();
-
          $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
          $idArray = array();
@@ -46,6 +44,61 @@ class erLhcoreClassUserDep{
    		return array_shift(self::getUserDepartaments());
    }
 
+   public static function addUserDepartament($department_id, $userID = false, $UserData = false)
+   {
+	   	$db = ezcDbInstance::get();
+
+	   	if ($userID === false)
+	   	{
+	   		$currentUser = erLhcoreClassUser::instance();
+	   		$userID = $currentUser->getUserID();
+	   	}
+
+	   	if ($department_id > 0){
+		   	$instanceUser = new erLhcoreClassModelUserDep();
+		   	$instanceUser->dep_id = $department_id;
+		   	$instanceUser->user_id = $userID;
+		   	$instanceUser->hide_online = $UserData->hide_online;
+		   	$instanceUser->saveThis();
+	   	} else {
+
+	   		foreach (erLhcoreClassModelInstanceUser::getUserInstancesCached($userID) as $instanceID) {
+	   			$instanceUser = new erLhcoreClassModelUserDep();
+	   			$instanceUser->dep_id = 0;
+	   			$instanceUser->instance_id = $instanceID;
+	   			$instanceUser->user_id = $userID;
+	   			$instanceUser->hide_online = $UserData->hide_online;
+	   			$instanceUser->saveThis();
+	   		}
+
+	   		if ($UserData->all_instances) {
+	   			$instanceUser = new erLhcoreClassModelUserDep();
+	   			$instanceUser->dep_id = 0;
+	   			$instanceUser->instance_id = 0;
+	   			$instanceUser->user_id = $userID;
+	   			$instanceUser->hide_online = $UserData->hide_online;
+	   			$instanceUser->saveThis();
+	   		}
+	   	}
+
+	   	if (isset($_SESSION['lhCacheUserDepartaments_'.$userID])){
+	   		unset($_SESSION['lhCacheUserDepartaments_'.$userID]);
+	   	}
+   }
+
+   public static function deleteUserDepartament($department_id, $userID = false)
+   {
+	   	$db = ezcDbInstance::get();
+	   	$stmt = $db->prepare('DELETE FROM lh_userdep WHERE user_id = :user_id AND dep_id = :dep_id');
+	   	$stmt->bindValue( ':user_id',$userID);
+	   	$stmt->bindValue( ':dep_id',$department_id);
+	   	$stmt->execute();
+
+	   	if (isset($_SESSION['lhCacheUserDepartaments_'.$userID])){
+	   		unset($_SESSION['lhCacheUserDepartaments_'.$userID]);
+	   	}
+   }
+
    public static function addUserDepartaments($Departaments, $userID = false,$UserData = false)
    {
        $db = ezcDbInstance::get();
@@ -55,7 +108,7 @@ class erLhcoreClassUserDep{
            $userID = $currentUser->getUserID();
        }
 
-       $stmt = $db->prepare('DELETE FROM lh_userdep WHERE user_id = :user_id ORDER BY id ASC');
+       $stmt = $db->prepare('DELETE FROM lh_userdep WHERE user_id = :user_id');
        $stmt->bindValue( ':user_id',$userID);
        $stmt->execute();
 
@@ -72,6 +125,24 @@ class erLhcoreClassUserDep{
            unset($_SESSION['lhCacheUserDepartaments_'.$userID]);
        }
 
+   }
+
+
+   public static function canMoveToDepartment($department, $user_id) {
+
+	   	$limitation = erLhcoreClassChat::getInstanceLimitation('lh_departament',$user_id);
+	   	$filterArray = array();
+
+	   	// Does not have any assigned department
+	   	if ($limitation === false) {
+	   		$filterArray['filter']['instance_id'] = -1;
+	   	} elseif ($limitation !== true) {
+	   		$filterArray['customfilter'][] = $limitation.' OR instance_id = 0';
+	   	}
+
+	   	$filterArray['filter']['id'] = $department;
+
+	   	return erLhcoreClassModelDepartament::getCount($filterArray) > 0;
    }
 
    public static function setHideOnlineStatus($UserData) {

@@ -3,7 +3,7 @@
 		<?php include(erLhcoreClassDesign::designtpl('lhkernel/validation_error.tpl.php'));?>
 <?php endif; ?>
 
-<form method="post" action="<?php echo erLhcoreClassDesign::baseurl('chat/startchat')?>">
+<form method="post" action="<?php echo erLhcoreClassDesign::baseurl('chat/startchat')?><?php echo $instance_url?>">
 
 <?php if (isset($start_data_fields['name_visible_in_popup']) && $start_data_fields['name_visible_in_popup'] == true) : ?>
 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/startchat','Name');?><?php if (isset($start_data_fields['name_require_option']) && $start_data_fields['name_require_option'] == 'required') : ?>*<?php endif;?></label>

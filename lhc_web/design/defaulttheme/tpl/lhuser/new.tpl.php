@@ -1,11 +1,11 @@
-<h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','New user');?></h1> 
+<h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','New user');?></h1>
 
 <?php if (isset($errors)) : ?>
 		<?php include(erLhcoreClassDesign::designtpl('lhkernel/validation_error.tpl.php'));?>
 <?php endif; ?>
 
 <form action="<?php echo erLhcoreClassDesign::baseurl('user/new')?>" method="post" autocomplete="off">
-		
+
 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Username');?></label>
 <input class="inputfield" type="text" name="Username" value="<?php echo htmlspecialchars($user->username);?>" />
 
@@ -26,25 +26,19 @@
 
 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','User group')?></label>
 <?php echo erLhcoreClassRenderHelper::renderCombobox( array (
-                    'input_name'     => 'DefaultGroup[]',	                 
-                    'selected_id'    => $user->user_groups_id,                      
-					'multiple' 		 => true,                     
+                    'input_name'     => 'DefaultGroup[]',
+                    'selected_id'    => $user->user_groups_id,
+					'multiple' 		 => true,
                     'list_function'  => 'erLhcoreClassModelGroup::getList'
             )); ?>
-            
+
 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Disabled')?>&nbsp;<input type="checkbox" value="on" name="UserDisabled" <?php echo $user->disabled == 1 ? 'checked="checked"' : '' ?> /></label>
 
-<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Do not show user status as online')?>&nbsp;<input type="checkbox" value="on" name="HideMyStatus" <?php echo $user->hide_online == 1 ? 'checked="checked"' : '' ?> /></label>  
-     
-<hr>
+<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Do not show user status as online')?>&nbsp;<input type="checkbox" value="on" name="HideMyStatus" <?php echo $user->hide_online == 1 ? 'checked="checked"' : '' ?> /></label>
 
-<h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Departaments')?></h5> 
+<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','All departments')?>&nbsp;<input type="checkbox" value="on" name="all_departments" <?php echo $user->all_departments == 1 ? 'checked="checked"' : '' ?> /></label>
 
-<label><input type="checkbox" value="on" name="all_departments" <?php echo $user->all_departments == 1 ? 'checked="checked"' : '' ?> /><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','All departments')?></label>
-           
-<?php foreach (erLhcoreClassDepartament::getDepartaments() as $departament) : ?>
-    <label><input type="checkbox" name="UserDepartament[]" value="<?php echo $departament['id']?>"<?php echo in_array($departament['id'],$userdepartaments) ? 'checked="checked"' : '';?>/><?php echo htmlspecialchars($departament['name'])?></label>
-<?php endforeach; ?>
+<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','All instances')?>&nbsp;<input type="checkbox" value="on" name="all_instances" <?php echo $user->all_instances == 1 ? 'checked="checked"' : '' ?> /></label>
 
 <input type="submit" class="small button" name="Update_account" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Save');?>"/>
 

@@ -3,6 +3,13 @@
 $tpl = erLhcoreClassTemplate::getInstance('lhdepartament/edit.tpl.php');
 
 $Departament = erLhcoreClassDepartament::getSession()->load( 'erLhcoreClassModelDepartament', (int)$Params['user_parameters']['departament_id'] );
+$currentUser = erLhcoreClassUser::instance();
+$UserData = $currentUser->getUserData();
+
+if ( !erLhcoreClassModelInstanceUser::isInstanceOperator($Departament->instance_id, $UserData) ) {
+	erLhcoreClassModule::redirect('departament/departaments');
+	exit;
+}
 
 if ( isset($_POST['Cancel_departament']) ) {
     erLhcoreClassModule::redirect('departament/departaments');
@@ -28,15 +35,16 @@ if (isset($_POST['Update_departament']) || isset($_POST['Save_departament'])  )
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('departament/edit','Please enter departament name');
     }
 
-    if ( $form->hasValidData( 'InstanceID' ) )
-    {
-    	$Departament->instance_id = $form->InstanceID;
+    if ( $currentUser->hasAccessTo('lhdepartament','manage_instance') ) {
+	    if ( $form->hasValidData( 'InstanceID' ) )
+	    {
+	    	$Departament->instance_id = $form->InstanceID;
+	    }
     }
 
     if (count($Errors) == 0)
     {
         $Departament->name = $form->Name;
-
         erLhcoreClassDepartament::getSession()->update($Departament);
 
         if (isset($_POST['Save_departament'])) {
@@ -52,6 +60,7 @@ if (isset($_POST['Update_departament']) || isset($_POST['Save_departament'])  )
 }
 
 $tpl->set('departament',$Departament);
+$tpl->set('current_user',$currentUser);
 
 $Result['content'] = $tpl->fetch();
 

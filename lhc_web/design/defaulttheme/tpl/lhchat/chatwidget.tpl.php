@@ -2,7 +2,7 @@
 		<?php include(erLhcoreClassDesign::designtpl('lhkernel/validation_error.tpl.php'));?>
 <?php endif; ?>
 
-<form method="post" action="<?php echo erLhcoreClassDesign::baseurl('chat/chatwidget')?>">
+<form method="post" action="<?php echo erLhcoreClassDesign::baseurl('chat/chatwidget')?><?php echo $instance_url?>">
 
 <div class="row">
     <?php if (isset($start_data_fields['name_visible_in_page_widget']) && $start_data_fields['name_visible_in_page_widget'] == true) : ?>
@@ -11,7 +11,7 @@
         <input type="text" class="inputfield" name="Username" value="<?php echo htmlspecialchars($input_data->username);?>" />
     </div>
     <?php endif; ?>
-    
+
     <?php if (isset($start_data_fields['email_visible_in_page_widget']) && $start_data_fields['email_visible_in_page_widget'] == true) : ?>
     <div class="columns six mobile-two end">
         <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/startchat','E-mail');?><?php if (isset($start_data_fields['email_require_option']) && $start_data_fields['email_require_option'] == 'required') : ?>*<?php endif;?></label>

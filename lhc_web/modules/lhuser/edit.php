@@ -135,6 +135,12 @@ if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
         	$groupUser->saveThis();
         }
 
+        erLhcoreClassUserDep::deleteUserDepartament(0, $UserData->id);
+
+        if ($UserData->all_departments == 1) {
+        	erLhcoreClassUserDep::addUserDepartament(0, $UserData->id, $UserData);
+        }
+
         $CacheManager = erConfigClassLhCacheConfig::getInstance();
         $CacheManager->expireCache();
 
@@ -150,6 +156,7 @@ if (isset($_POST['Update_account']) || isset($_POST['Save_account']))
     }
 }
 
+// Removes selected instances from user
 if (isset($_POST['RemoveSelectedInstance'])) {
 	if (isset($_POST['UserInstances']) && count($_POST['UserInstances']) > 0) {
 		$globalDepartament = array_merge($_POST['UserInstances'],$globalDepartament);
@@ -160,22 +167,13 @@ if (isset($_POST['RemoveSelectedInstance'])) {
 	$tpl->set('account_updated_instances','done');
 }
 
+// Removes selected departments from user
 if (isset($_POST['RemoveSelectedDepartments']))
 {
-   $globalDepartament = array();
-
-   if ($UserData->all_departments == 1) {
-   		$globalDepartament[] = 0;
-   }
-
    if (isset($_POST['UserDepartament']) && count($_POST['UserDepartament']) > 0) {
-       $globalDepartament = array_merge($_POST['UserDepartament'],$globalDepartament);
-   }
-
-   if (count($globalDepartament) > 0) {
-       erLhcoreClassUserDep::addUserDepartaments($globalDepartament,$Params['user_parameters']['user_id'],$UserData);
-   } else {
-       erLhcoreClassUserDep::addUserDepartaments(array(),$Params['user_parameters']['user_id'],$UserData);
+       foreach ($_POST['UserDepartament'] as $instanceID) {
+       		erLhcoreClassUserDep::deleteUserDepartament($instanceID, $UserData->id);
+       }
    }
 
    $tpl->set('account_updated_departaments','done');

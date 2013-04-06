@@ -13,6 +13,7 @@ $chat->user_id = $currentUser->getUserID();
 
 if  ($chatTransfer->dep_id > 0) {
 	$chat->dep_id = $chatTransfer->dep_id;
+	$chat->instance_id = $chat->department->instance_id;
 
 	// User does not have access to chat in this department, that mean we do not have to do anything
 	if (!erLhcoreClassChat::hasAccessToRead($chat)){
@@ -30,7 +31,7 @@ if ( !erLhcoreClassChat::hasAccessToRead($chat) )
 }
 
 // All ok, we can make changes
-erLhcoreClassChat::getSession()->update($chat);
+$chat->saveThis();
 erLhcoreClassTransfer::getSession()->delete($chatTransfer);
 
 echo json_encode(array('error' => 'false'));

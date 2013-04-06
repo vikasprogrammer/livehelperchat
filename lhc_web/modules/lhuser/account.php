@@ -176,6 +176,7 @@ if (!isset($UserData))
 $tpl->set('editdepartaments',$allowEditDepartaments);
 
 $tpl->set('user',$UserData);
+$tpl->set('current_user',$currentUser);
 
 $Result['content'] = $tpl->fetch();
 

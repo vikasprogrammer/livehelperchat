@@ -14,6 +14,19 @@
         </div>
     </div>
 </div>
-   
+
+<script type="text/javascript" language="javascript" src="<?php echo erLhcoreClassDesign::designJS('js/app.js');?>"></script>
+
+<?php if(isset($Result['adjust_size_colorbox'])):?>
+   <script type="text/javascript">
+$(document).ready(function() {
+    parent.$.fn.colorbox.resize({
+        innerWidth: $(document).width(),
+        innerHeight: $(document).height()
+    });
+});
+</script>
+<?php endif;?>
+
 </body>
 </html>

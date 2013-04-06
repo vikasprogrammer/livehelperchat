@@ -1,11 +1,11 @@
 <?php
 
-$tpl = erLhcoreClassTemplate::getInstance('lhinstance/assigntouser.tpl.php');
+$tpl = erLhcoreClassTemplate::getInstance('lhdepartament/assigntouser.tpl.php');
 $user = erLhcoreClassModelUser::fetch($Params['user_parameters']['user_id']);
 
-if (isset($_POST['AssignInstance'])) {
+if (isset($_POST['AssignDepartment'])) {
 	$definition = array (
-			'InstanceID' => new ezcInputFormDefinitionElement(
+			'DepartmentID' => new ezcInputFormDefinitionElement(
 					ezcInputFormDefinitionElement::OPTIONAL, 'int',
 					null,
 					FILTER_REQUIRE_ARRAY
@@ -16,20 +16,21 @@ if (isset($_POST['AssignInstance'])) {
 	$Errors = array();
 	$instancesArray = array();
 
-	if ( $form->hasValidData( 'InstanceID' ) ) {
-		$instancesArray = $form->InstanceID;
+	if ( $form->hasValidData( 'DepartmentID' ) ) {
+		$instancesArray = $form->DepartmentID;
 	} else {
-		$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Please choose instance');
+		$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/new','Please choose department');
 	}
 
 	if (count($Errors) == 0) {
 
-		erLhcoreClassModelInstanceUser::removeInstancesFromUser($user->id);
-
 		foreach ($instancesArray as $instance_id) {
-			$instanceUser = new erLhcoreClassModelInstanceUser();
-			$instanceUser->instance_id = $instance_id;
+			erLhcoreClassUserDep::deleteUserDepartament($instance_id,$user->id);
+
+			$instanceUser = new erLhcoreClassModelUserDep();
+			$instanceUser->dep_id = $instance_id;
 			$instanceUser->user_id = $user->id;
+			$instanceUser->hide_online = $user->hide_online;
 			$instanceUser->saveThis();
 		}
 
@@ -40,15 +41,25 @@ if (isset($_POST['AssignInstance'])) {
     }
 }
 
+$limitation = erLhcoreClassChat::getInstanceLimitation('lh_departament',$user->id);
+$filterArray = array();
+
+// Does not have any assigned department
+if ($limitation === false) {
+	$filterArray['filter']['instance_id'] = -1;
+} elseif ($limitation !== true) {
+	$filterArray['customfilter'][] = $limitation;
+}
+
 $pages = new lhPaginator();
-$pages->serverURL = erLhcoreClassDesign::baseurl('instance/assigntouser').'/'.$user->id;
-$pages->items_total = erLhcoreClassInstance::getCount();
+$pages->serverURL = erLhcoreClassDesign::baseurl('department/assigntouser').'/'.$user->id;
+$pages->items_total = erLhcoreClassModelDepartament::getCount($filterArray);
 $pages->setItemsPerPage(20);
 $pages->paginate();
 
 $items = array();
 if ($pages->items_total > 0) {
-	$items = erLhcoreClassInstance::getList(array('offset' => $pages->low, 'limit' => $pages->items_per_page,'sort' => 'id ASC'));
+	$items = erLhcoreClassModelDepartament::getList(array_merge($filterArray,array('offset' => $pages->low, 'limit' => $pages->items_per_page,'sort' => 'id ASC')));
 }
 
 $tpl->set('items',$items);

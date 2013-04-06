@@ -218,6 +218,11 @@ class erLhcoreClassInstance {
     	return $result;
     }
 
+    public static function getUserDefaultInstanceId($user_id) {
+    	$instancesIDs = erLhcoreClassModelInstanceUser::getUserInstancesCached($user_id);
+    	return array_shift($instancesIDs);
+    }
+
     public static function getSession()
     {
         if ( !isset( self::$persistentSession ) )

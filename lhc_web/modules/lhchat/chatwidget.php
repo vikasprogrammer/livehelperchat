@@ -15,6 +15,14 @@ if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget')) !== fa
 $tpl = erLhcoreClassTemplate::getInstance( 'lhchat/chatwidget.tpl.php');
 $tpl->set('referer','');
 
+$instance = is_numeric($Params['user_parameters_unordered']['instance']) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+$tpl->set('instance',$instance);
+
+$tpl->set('instance_url','');
+if ($instance !== false) {
+	$tpl->set('instance_url','/(instance)/'.$instance);
+}
+
 // Start chat field options
 $startData = erLhcoreClassModelChatConfig::fetch('start_chat_data');
 $startDataFields = (array)$startData->data;
@@ -26,6 +34,7 @@ $inputData->email = '';
 $inputData->phone = '';
 $inputData->departament_id = 0;
 $inputData->validate_start_chat = false;
+$inputData->instance = $instance;
 
 $chat = new erLhcoreClassModelChat();
 
@@ -49,7 +58,7 @@ if (isset($_POST['StartChat']))
        erLhcoreClassModelChat::detectLocation($chat);
 
        // Store chat
-       erLhcoreClassChat::getSession()->save($chat);
+       $chat->saveThis();
 
        // Assign chat to user
        if ( erLhcoreClassModelChatConfig::fetch('track_online_visitors')->current_value == 1 ) {

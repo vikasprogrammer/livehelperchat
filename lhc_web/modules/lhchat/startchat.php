@@ -19,6 +19,14 @@ $tpl->set('referer','');
 $startData = erLhcoreClassModelChatConfig::fetch('start_chat_data');
 $startDataFields = (array)$startData->data;
 
+$instance = (is_numeric($Params['user_parameters_unordered']['instance']) && $Params['user_parameters_unordered']['instance'] > 0) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+$tpl->set('instance',$instance);
+
+$tpl->set('instance_url','');
+if ($instance !== false) {
+	$tpl->set('instance_url','/(instance)/'.$instance);
+}
+
 // Input fields holder
 $inputData = new stdClass();
 $inputData->username = '';
@@ -26,6 +34,7 @@ $inputData->question = '';
 $inputData->email = '';
 $inputData->phone = '';
 $inputData->departament_id = 0;
+$inputData->instance = $instance;
 $inputData->validate_start_chat = true;
 
 $chat = new erLhcoreClassModelChat();
@@ -49,7 +58,7 @@ if (isset($_POST['StartChat'])) {
        erLhcoreClassModelChat::detectLocation($chat);
 
        // Store chat
-       erLhcoreClassChat::getSession()->save($chat);
+       $chat->saveThis();
 
        // Assign chat to user
        if ( erLhcoreClassModelChatConfig::fetch('track_online_visitors')->current_value == 1 ) {

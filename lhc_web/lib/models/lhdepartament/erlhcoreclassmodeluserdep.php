@@ -9,6 +9,7 @@ class erLhcoreClassModelUserDep {
                'user_id'        => $this->user_id,
                'dep_id'         => $this->dep_id,
                'last_activity'  => $this->last_activity,
+               'instance_id'  	=> $this->instance_id,
                'hide_online'    => $this->hide_online
        );
    }
@@ -26,6 +27,10 @@ class erLhcoreClassModelUserDep {
 			case 'user':
 					$this->user = erLhcoreClassModelUser::fetch($this->user_id);
 					return $this->user;
+				break;
+
+			case 'all_departments':
+					return $this->dep_id == 0;
 				break;
 
 			case 'department':
@@ -51,6 +56,16 @@ class erLhcoreClassModelUserDep {
 				break;
 		}
    }
+
+   public function saveThis() {
+
+   		if ( $this->department !== false ) {
+   			$this->instance_id = $this->department->instance_id;
+   		}
+
+   		erLhcoreClassDepartament::getSession()->saveOrUpdate($this);
+   }
+
 
    public static function getList($paramsSearch = array())
    {
@@ -153,6 +168,7 @@ class erLhcoreClassModelUserDep {
    public $dep_id = 0;
    public $hide_online = 0;
    public $last_activity = 0;
+   public $instance_id = 0;
 }
 
 ?>

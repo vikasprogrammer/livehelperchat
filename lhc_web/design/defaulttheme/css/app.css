@@ -254,6 +254,10 @@ ul.mb0 {
 	margin-bottom:0;
 }
 
+.w700 {
+
+}
+
 @media only screen and (max-width: 467px) {
     .tabs dd {
         display:block;

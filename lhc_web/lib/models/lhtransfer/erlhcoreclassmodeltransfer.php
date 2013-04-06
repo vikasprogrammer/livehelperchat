@@ -23,6 +23,11 @@ class erLhcoreClassModelTransfer {
        }
    }
 
+   public function saveThis( )
+   {
+   	   erLhcoreClassTransfer::getSession()->saveOrUpdate($this);
+   }
+
    public $id = null;
    public $dep_id = 0;
    public $chat_id = null;

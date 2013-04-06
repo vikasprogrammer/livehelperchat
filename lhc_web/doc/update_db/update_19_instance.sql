@@ -36,3 +36,18 @@ COMMENT='';
 ALTER TABLE `lh_transfer`
 ADD `to_instance_id` int(11) NOT NULL,
 COMMENT='';
+
+ALTER TABLE `lh_chat` ADD INDEX `status_instance_id_id` (`status`, `instance_id`, `id`);
+
+ALTER TABLE `lh_chat` ADD INDEX `instance_id` (`instance_id`), ADD INDEX `has_unread_messages_instance_id_id` (`has_unread_messages`, `instance_id`, `id`);
+
+ALTER TABLE `lh_userdep`
+ADD `instance_id` int(11) NOT NULL,
+COMMENT='';
+
+ALTER TABLE `lh_userdep`
+ADD INDEX `instance_id` (`instance_id`);
+
+ALTER TABLE `lh_chat`
+ADD `original_instance_id` int(11) NOT NULL,
+COMMENT='';

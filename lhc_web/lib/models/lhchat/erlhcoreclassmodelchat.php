@@ -25,6 +25,7 @@ class erLhcoreClassModelChat {
                'has_unread_messages'    => $this->has_unread_messages,
                'last_user_msg_time'     => $this->last_user_msg_time,
                'instance_id'     		=> $this->instance_id,
+               'original_instance_id'   => $this->original_instance_id,
        );
    }
 
@@ -42,7 +43,16 @@ class erLhcoreClassModelChat {
    }
 
    public function saveThis() {
-       	 erLhcoreClassChat::getSession()->saveOrUpdate($this);
+
+   	   if ($this->department !== false) {
+   			$this->instance_id = $this->department->instance_id;
+   	   }
+
+   	   if ($this->original_instance_id == 0) {
+   	   		$this->original_instance_id = $this->instance_id;
+   	   }
+
+       erLhcoreClassChat::getSession()->saveOrUpdate($this);
    }
 
    public function updateThis() {
@@ -154,6 +164,7 @@ class erLhcoreClassModelChat {
    public $has_unread_messages = 0;
    public $last_user_msg_time = 0;
    public $instance_id = 0;
+   public $original_instance_id = 0;
 
 }
 

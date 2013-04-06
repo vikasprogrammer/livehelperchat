@@ -50,9 +50,9 @@ class erLhcoreClassModelInstance {
 
        switch ($var) {
 
-       	case 'is_operator_typing':
-       		   $this->is_operator_typing = $this->operator_typing > (time()-6); // typing is considered if status did not changed for 10 seconds
-       		   return $this->is_operator_typing;
+       	case 'departments':
+       		   $this->departments = erLhcoreClassModelDepartament::getList(array('filter' => array('instance_id' => $this->id)));
+       		   return $this->departments;
        		break;
 
        	default:

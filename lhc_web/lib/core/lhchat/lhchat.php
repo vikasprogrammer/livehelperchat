@@ -25,7 +25,16 @@ class erLhcoreClassChat {
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'status_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return array(); }
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	$filter['limit'] = $limit;
@@ -41,14 +50,23 @@ class erLhcoreClassChat {
     	$limitation = self::getDepartmentLimitation();
 
     	// Does not have any assigned department
-    	if ($limitation === false) { return array(); }
+    	if ($limitation === false) { return 0; }
 
     	$filter = array();
     	$filter['filter'] = array('status' => 0);
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'status_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return 0; }
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	return self::getCount($filter);
@@ -288,6 +306,34 @@ class erLhcoreClassChat {
     	return true;
     }
 
+    public static function getInstanceLimitation($tableName = 'lh_chat', $user_id = false) {
+    	$currentUser = erLhcoreClassUser::instance();
+    	$LimitationDepartament = '';
+    	$userData = $currentUser->getUserData(true);
+
+    	if ( $userData->all_instances == 0 )
+    	{
+    		if ($user_id === false){
+    			$user_id = $currentUser->getUserID();
+    		}
+
+    		$userDepartaments = erLhcoreClassModelInstanceUser::getUserInstances($user_id);
+
+    		if (count($userDepartaments) == 0) return false;
+
+    		$instancesIDs = array();
+    		foreach ($userDepartaments as $assign) {
+    			$instancesIDs[] = $assign->instance_id;
+    		}
+
+    		$LimitationDepartament = '('.$tableName.'.instance_id IN ('.implode(',',$instancesIDs).'))';
+
+    		return $LimitationDepartament;
+    	}
+
+    	return true;
+    }
+
     // Get's unread messages from users
     public static function getUnreadMessagesChats($limit = 10, $offset = 0) {
 
@@ -304,8 +350,19 @@ class erLhcoreClassChat {
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'has_unread_messages_dep_id_id';
     	}
+
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return array(); }
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
+    	}
+
 
     	$filter['limit'] = $limit;
     	$filter['offset'] = $offset;
@@ -332,7 +389,16 @@ class erLhcoreClassChat {
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'has_unread_messages_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return array(); }
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	$rows = self::getCount($filter);
@@ -352,7 +418,16 @@ class erLhcoreClassChat {
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'status_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return array(); }
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	$filter['limit'] = $limit;
@@ -367,14 +442,23 @@ class erLhcoreClassChat {
     	$limitation = self::getDepartmentLimitation();
 
     	// Does not have any assigned department
-    	if ($limitation === false) { return array(); }
+    	if ($limitation === false) { return 0; }
 
     	$filter = array();
     	$filter['filter'] = array('status' => 1);
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'status_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return 0;}
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	return self::getCount($filter);
@@ -392,7 +476,16 @@ class erLhcoreClassChat {
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'status_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return array();}
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	$filter['limit'] = $limit;
@@ -414,25 +507,46 @@ class erLhcoreClassChat {
 
     	if ($limitation !== true) {
     		$filter['customfilter'][] = $limitation;
-    		$filter['use_index'] = 'status_dep_id_id';
+    	}
+
+    	// Instances limitation
+    	$limitation = erLhcoreClassChat::getInstanceLimitation();
+
+    	// Does not have any assigned instance
+    	if ($limitation === false) { return 0;}
+
+    	if ($limitation !== true) {
+    		$filter['customfilter'][] = $limitation;
     	}
 
     	return self::getCount($filter);
     }
 
 
-    public static function isOnline($dep_id = false)
+    public static function isOnline($dep_id = false, $instance = false)
     {
        $isOnlineUser = (int)erConfigClassLhConfig::getInstance()->getSetting('chat','online_timeout');
-
        $db = ezcDbInstance::get();
 
+       $instanceSQL = '';
+       if ($instance !== false && $instance > 0) {
+       		$instanceSQL = ' AND instance_id = :instance_id';
+       }
+
        if ($dep_id !== false){
-           $stmt = $db->prepare('SELECT COUNT(id) AS found FROM lh_userdep WHERE (last_activity > :last_activity AND hide_online = 0) AND (dep_id = :dep_id OR dep_id = 0)');
+           $stmt = $db->prepare("SELECT COUNT(id) AS found FROM lh_userdep WHERE (last_activity > :last_activity AND hide_online = 0) AND (dep_id = :dep_id OR dep_id = 0) {$instanceSQL}");
            $stmt->bindValue(':dep_id',$dep_id);
+           if (!empty($instanceSQL)) {
+           		$stmt->bindValue(':instance_id',$instance);
+           }
            $stmt->bindValue(':last_activity',(time()-$isOnlineUser));
        } else {
-           $stmt = $db->prepare('SELECT COUNT(id) AS found FROM lh_userdep WHERE last_activity > :last_activity AND hide_online = 0');
+           $stmt = $db->prepare("SELECT COUNT(id) AS found FROM lh_userdep WHERE last_activity > :last_activity AND hide_online = 0 {$instanceSQL}");
+
+           if (!empty($instanceSQL)) {
+           		$stmt->bindValue(':instance_id',$instance);
+           }
+
            $stmt->bindValue(':last_activity',(time()-$isOnlineUser));
        }
 
@@ -466,7 +580,18 @@ class erLhcoreClassChat {
        		$limitationSQL = ' AND '.$limitation;
        }
 
-       $SQL = 'SELECT lh_users.* FROM lh_users INNER JOIN lh_userdep ON lh_userdep.user_id = lh_users.id WHERE lh_userdep.last_activity > :last_activity '.$NotUser.$limitationSQL.' GROUP BY lh_users.id';
+       // Instances limitation
+       $limitation = erLhcoreClassChat::getInstanceLimitation('lh_userdep');
+
+       // Does not have any assigned instance
+       if ($limitation === false) { return array(); }
+
+       if ($limitation !== true) {
+       		$limitationSQL = ' AND '.$limitation;
+       }
+
+       $SQL = 'SELECT lh_users.* FROM lh_users
+       		INNER JOIN lh_userdep ON lh_userdep.user_id = lh_users.id WHERE lh_userdep.last_activity > :last_activity '.$NotUser.$limitationSQL.' GROUP BY lh_users.id';
        $stmt = $db->prepare($SQL);
 
        $stmt->bindValue(':last_activity',(time()-$isOnlineUser));
@@ -515,17 +640,21 @@ class erLhcoreClassChat {
        $userData = $currentUser->getUserData(true);
 
        if ( $userData->all_departments == 0 ) {
-            /*
-             * From now permission is strictly by assigned department, not by chat owner
-             *
-             * if ($chat->user_id == $currentUser->getUserID()) return true;
-             * */
-
             $userDepartaments = erLhcoreClassUserDep::getUserDepartaments($currentUser->getUserID());
 
             if (count($userDepartaments) == 0) return false;
 
             if (in_array($chat->dep_id,$userDepartaments)) return true;
+
+            return false;
+       }
+
+       if ( $userData->all_instances == 0 ) {
+            $userDepartaments = erLhcoreClassModelInstanceUser::getUserInstancesCached($currentUser->getUserID());
+
+            if (count($userDepartaments) == 0) return false;
+
+            if (in_array($chat->instance_id,$userDepartaments)) return true;
 
             return false;
        }

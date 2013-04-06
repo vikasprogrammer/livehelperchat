@@ -106,5 +106,6 @@ $FunctionList['userlist'] = array('explain' => 'Allow logged user to list users'
 $FunctionList['selfedit'] = array('explain' => 'Allow logged user to edit his own data');
 $FunctionList['editdepartaments'] = array('explain' => 'Allow logged user to edit his responsible departaments');
 $FunctionList['userlistonline'] = array('explain' => 'Allow user to see logged operators list');
+$FunctionList['change_login_data'] = array('explain' => 'Allow user to change login data');
 
 ?>

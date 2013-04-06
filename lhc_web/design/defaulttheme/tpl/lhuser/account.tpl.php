@@ -2,7 +2,6 @@
 
 <dl class="tabs">
   <dd <?php if ($tab == '') : ?>class="active"<?php endif;?>><a href="#simple1"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Account data');?></a></dd>
-  <dd <?php if ($tab == 'tab_departments') : ?>class="active"<?php endif;?>><a href="#simple2"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Assigned departments');?></a></dd>
   <dd <?php if ($tab == 'tab_settings') : ?>class="active"<?php endif;?>><a href="#simple3"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Other');?></a></dd>
 </dl>
 
@@ -22,13 +21,13 @@
 	<form action="<?php echo erLhcoreClassDesign::baseurl('user/account')?>" method="post" autocomplete="off">
 
 	    <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Username');?></label>
-	    <input type="text" placeholder="Your username" name="Username" value="<?php echo htmlspecialchars($user->username);?>" />
+	    <input type="text" <?php if (!$current_user->hasAccessTo('lhuser','change_login_data')) : ?>disabled="disabled"<?php endif;?> placeholder="Your username" name="Username" value="<?php echo htmlspecialchars($user->username);?>" />
 
 	    <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Password');?></label>
-	    <input type="password" placeholder="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Enter new password');?>" name="Password" value=""/>
+	    <input type="password" <?php if (!$current_user->hasAccessTo('lhuser','change_login_data')) : ?>disabled="disabled"<?php endif;?> placeholder="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Enter new password');?>" name="Password" value=""/>
 
 	    <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Repeat password');?></label>
-	    <input type="password" placeholder="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Repeat new password');?>" name="Password1" value=""/>
+	    <input type="password" <?php if (!$current_user->hasAccessTo('lhuser','change_login_data')) : ?>disabled="disabled"<?php endif;?> placeholder="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Repeat new password');?>" name="Password1" value=""/>
 
 	    <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Email');?></label>
 	    <input type="text" value="<?php echo $user->email;?>" name="Email" placeholder="Your email address" id="email" class="required email valid">
@@ -40,37 +39,10 @@
 	    <input type="text" name="Surname" value="<?php echo htmlspecialchars($user->surname);?>"/>
 
 	    <ul class="button-group radius">
-	    <li><input type="submit" name="Update" class="small button" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Update');?>"></li>
-	    <li><a href="<?php echo erLhcoreClassDesign::baseurl()?>" class="small button"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Return');?></a></li>
+	    	<li><input type="submit" name="Update" class="small button" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Update');?>"></li>
+	    	<li><a href="<?php echo erLhcoreClassDesign::baseurl()?>" class="small button"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Return');?></a></li>
 	    </ul>
 	</form>
-  </li>
-  <li <?php if ($tab == 'tab_departments') : ?>class="active"<?php endif;?> id="simple2Tab">
-  	<h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Assigned departments');?></h5>
-	<?php if (isset($account_updated_departaments) && $account_updated_departaments == 'done') : ?>
-		<?php $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Account updated'); ?>
-		<?php include(erLhcoreClassDesign::designtpl('lhkernel/alert_success.tpl.php'));?>
-	<?php endif; ?>
-
-	<?php $userDepartaments = erLhcoreClassUserDep::getUserDepartaments(); ?>
-
-	<?php if ($editdepartaments === true) { ?>
-	<form action="<?php echo erLhcoreClassDesign::baseurl('user/account')?>" method="post">
-
-	<label><input type="checkbox" value="on" name="all_departments" <?php echo $user->all_departments == 1 ? 'checked="checked"' : '' ?> />All departments</label>
-
-	<?php foreach (erLhcoreClassDepartament::getDepartaments() as $departament) : ?>
-	    <label><input type="checkbox" name="UserDepartament[]" value="<?php echo $departament['id']?>" <?php echo in_array($departament['id'],$userDepartaments) ? 'checked="checked"' : '';?>/><?php echo $departament['name']?></label>
-	<?php endforeach; ?>
-
-	<input type="submit" class="small button" name="UpdateDepartaments_account" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Update');?>"/>
-	</form>
-	<?php } else {?>
-	<?php foreach (erLhcoreClassDepartament::getDepartaments() as $departament) : ?>
-	    <label><input type="checkbox" disabled value="<?php echo $departament['id']?>"<?php echo in_array($departament['id'],$userDepartaments) ? 'checked="checked"' : '';?>/> <?php echo $departament['name']?></label>
-	<?php endforeach; ?>
-
-	<?php } ?>
   </li>
   <li id="simple3Tab" <?php if ($tab == 'tab_settings') : ?>class="active"<?php endif;?>>
   <h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Visible lists');?></h5>

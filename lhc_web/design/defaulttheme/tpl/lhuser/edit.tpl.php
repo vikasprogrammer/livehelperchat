@@ -71,13 +71,14 @@
 		<?php endif; ?>
 
 		<form action="<?php echo erLhcoreClassDesign::baseurl('user/edit')?>/<?php echo $user->id?>" method="post">
-		    <?php foreach (erLhcoreClassModelUserDep::getList(array('filter' => array('user_id' => $user->id))) as $departament) : ?>
-		        <label><input type="checkbox" name="UserDepartament[]" value="<?php echo $departament->id?>" checked="checked"/><?php echo htmlspecialchars($departament->department)?> (<?php echo htmlspecialchars($departament->instance)?>)</label>
-		    <?php endforeach; ?>
+		    <?php foreach (erLhcoreClassModelUserDep::getList(array('filter' => array('user_id' => $user->id))) as $departament) :
+		    if ($departament->all_departments == false) : ?>
+		        <label><input type="checkbox" name="UserDepartament[]" value="<?php echo $departament->dep_id?>" checked="checked"/><?php echo htmlspecialchars($departament->department)?> (<?php echo htmlspecialchars($departament->instance)?>)</label>
+		    <?php endif;endforeach; ?>
 
 		    <ul class="button-group radius">
 				<li><input type="submit" class="small button" name="RemoveSelectedDepartments" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Remove selected');?>"/></li>
-				<li><a href="#" class="small button" onclick="return $.colorbox({'iframe':true,height:'500px',width:'500px', href:'<?php echo erLhcoreClassDesign::baseurl('department/assigntouser')?>/<?php echo $user->id?>'});"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assign department');?></a></li>
+				<li><a href="#" class="small button" onclick="return $.colorbox({'iframe':true,height:'500px',width:'500px', href:'<?php echo erLhcoreClassDesign::baseurl('departament/assigntouser')?>/<?php echo $user->id?>'});"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assign department');?></a></li>
 			</ul>
 
 		</form>

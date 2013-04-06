@@ -626,7 +626,7 @@ function lh(){
 
 	this.transferUserDialog = function(chat_id,title)
 	{
-		$.colorbox({width:'550px',height:'400px', href:this.wwwDir + 'chat/transferchat/'+chat_id});
+		$.colorbox({'iframe':true,width:'740px',height:'400px', href:this.wwwDir + 'chat/transferchat/'+chat_id});
 	};
 
     this.addmsgadmin = function (chat_id)

@@ -118,14 +118,15 @@ class erLhcoreClassChatValidator {
             }
         }
 
-        $departments = erLhcoreClassModelDepartament::getList();
-        $ids = array_keys($departments);
+        $ids = erLhcoreClassDepartament::getDepartamentsStartChat($inputForm->instance,true);
         if ($form->hasValidData( 'DepartamentID' ) && in_array($form->DepartamentID,$ids)) {
             $chat->dep_id = $form->DepartamentID;
         } else {
             $id = array_shift($ids);
             $chat->dep_id = $id;
         }
+
+
 
         $inputForm->departament_id = $chat->dep_id;
 

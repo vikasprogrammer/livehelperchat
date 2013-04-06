@@ -32,6 +32,7 @@ $ViewList['closechat'] = array(
 $ViewList['transferchat'] = array(
     'script' => 'transferchat.php',
     'params' => array('chat_id'),
+    'uparams' => array('tab'),
     'functions' => array( 'allowtransfer' )
 );
 
@@ -162,20 +163,22 @@ $ViewList['blockedusers'] = array(
     'functions' => array( 'allowblockusers' )
 );
 
-$ViewList['getstatus'] = array(
+$ViewList['getstatus'] = array (
     'script' => 'getstatus.php',
     'params' => array(),
-    'uparams' => array('click','position','hide_offline','check_operator_messages'),
+    'uparams' => array('instance','click','position','hide_offline','check_operator_messages'),
     );
 
-$ViewList['startchat'] = array(
+$ViewList['startchat'] = array (
     'script' => 'startchat.php',
-    'params' => array()
-    );
+    'params' => array(),
+    'uparams' => array('instance'),
+);
 
-$ViewList['chatwidget'] = array(
+$ViewList['chatwidget'] = array (
     'script' => 'chatwidget.php',
-    'params' => array()
+    'params' => array(),
+	'uparams' => array('instance')
 );
 
 $ViewList['readoperatormessage'] = array(
@@ -212,7 +215,7 @@ $ViewList['onlineusers'] = array(
     'script' => 'onlineusers.php',
     'params' => array(),
     'uparams' => array('clear_list','method'),
-    'functions' => array( 'use' )
+    'functions' => array( 'use','track_online_users' )
 );
 
 $ViewList['sendnotice'] = array(
@@ -283,6 +286,8 @@ $FunctionList['allowblockusers'] = array('explain' =>'Allow user to block users'
 $FunctionList['administrateconfig'] = array('explain' =>'Allow to change chat config');
 $FunctionList['allowclearonlinelist'] = array('explain' =>'Allow use to clean online users list');
 $FunctionList['administratecannedmsg'] = array('explain' =>'Allow use change canned messages');
+$FunctionList['track_online_users'] = array('explain' =>'Allow use change canned messages');
+$FunctionList['transfer_global'] = array('explain' =>'Allow use transfer chats between instances');
 
 
 

@@ -56,6 +56,49 @@ class erLhcoreClassModelInstanceUser {
 
    }
 
+   public static function getUserInstances($user_id) {
+   		return erLhcoreClassInstance::getList(array('filter' => array('user_id' => $user_id)),'erLhcoreClassModelInstanceUser','lh_instance_user');
+   }
+
+   public static function getUserInstancesCached($userID = false) {
+   		if (isset($GLOBALS['lhCacheUserInstances_'.$userID])) return $GLOBALS['lhCacheUserInstances_'.$userID];
+	   	if (isset($_SESSION['lhCacheUserInstances_'.$userID])) return $_SESSION['lhCacheUserInstances_'.$userID];
+
+	   	$db = ezcDbInstance::get();
+
+	   	if ($userID === false)
+	   	{
+	   		$currentUser = erLhcoreClassUser::instance();
+	   		$userID = $currentUser->getUserID();
+	   	}
+
+	   	$stmt = $db->prepare('SELECT lh_instance_user.instance_id FROM lh_instance_user WHERE user_id = :user_id ORDER BY id ASC');
+	   	$stmt->bindValue( ':user_id',$userID);
+	   	$stmt->execute();
+	   	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	   	$idArray = array();
+
+	   	foreach ($rows as $row)
+	   	{
+	   		$idArray[] = $row['instance_id'];
+	   	}
+
+	   	$GLOBALS['lhCacheUserInstances_'.$userID] = $idArray;
+	   	$_SESSION['lhCacheUserInstances_'.$userID] = $idArray;
+
+	   	return $idArray;
+   }
+
+   public static function isInstanceOperator($instance, $currentUser) {
+
+   		if ($currentUser->all_instances == 1) {
+   			return true;
+   		}
+
+   		return in_array($instance, self::getUserInstancesCached($currentUser->id));
+   }
+
    public static function removeInstanceFromUser($instance, $user_id) {
 	   	$session = erLhcoreClassInstance::getSession();
 	   	$q = $session->database->createDeleteQuery();
@@ -63,6 +106,10 @@ class erLhcoreClassModelInstanceUser {
 	   	->where( $q->expr->eq( 'user_id', $q->bindValue( $user_id ) ),$q->expr->eq( 'instance_id', $q->bindValue( $instance ) ) );
 	   	$stmt = $q->prepare();
 	   	$stmt->execute();
+
+	   	if (isset($_SESSION['lhCacheUserInstances_'.$user_id])){
+	   		unset($_SESSION['lhCacheUserInstances_'.$user_id]);
+	   	}
    }
 
    public static function removeInstancesFromUser ( $user_id ) {
@@ -72,6 +119,10 @@ class erLhcoreClassModelInstanceUser {
 	   	->where( $q->expr->eq( 'user_id', $q->bindValue( $user_id ) ) );
 	   	$stmt = $q->prepare();
 	   	$stmt->execute();
+
+	   	if (isset($_SESSION['lhCacheUserInstances_'.$user_id])){
+	   		unset($_SESSION['lhCacheUserInstances_'.$user_id]);
+	   	}
    }
 
    public $id = null;

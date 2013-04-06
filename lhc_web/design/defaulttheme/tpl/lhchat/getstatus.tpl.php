@@ -57,14 +57,14 @@ if (key_exists($position, $positionArgument)){
 	$currentPosition = $positionArgument['bottom_right'];
 }
 
-$isOnlineHelp = erLhcoreClassChat::isOnline();
+$isOnlineHelp = erLhcoreClassChat::isOnline(false,$instance);
 
 // Perhaps user do not want to show live help then it's offline
 if ( !($isOnlineHelp == false && $hide_offline == 'true') ) : ?>
 
 var lh_inst  = {
 
-    urlopen : "<?php echo erLhcoreClassSystem::instance()->baseHTTP?><?php echo $_SERVER['HTTP_HOST']?><?php echo erLhcoreClassDesign::baseurl('chat/startchat')?>",
+    urlopen : "<?php echo erLhcoreClassSystem::instance()->baseHTTP?><?php echo $_SERVER['HTTP_HOST']?><?php echo erLhcoreClassDesign::baseurl('chat/startchat')?><?php echo $instance_url?>",
 
     windowname : "startchatwindow",
 
@@ -122,7 +122,7 @@ var lh_inst  = {
           if ( url_to_open != undefined ) {
                 this.initial_iframe_url = url_to_open+'?URLReferer='+escape(document.location);
           } else {
-                this.initial_iframe_url = "<?php echo erLhcoreClassSystem::instance()->baseHTTP?><?php echo $_SERVER['HTTP_HOST']?><?php echo erLhcoreClassDesign::baseurl('chat/chatwidget')?>"+'?URLReferer='+escape(document.location);
+                this.initial_iframe_url = "<?php echo erLhcoreClassSystem::instance()->baseHTTP?><?php echo $_SERVER['HTTP_HOST']?><?php echo erLhcoreClassDesign::baseurl('chat/chatwidget')?><?php echo $instance_url?>"+'?URLReferer='+escape(document.location);
           }
 
           this.iframe_html = '<iframe id="fdbk_iframe" allowTransparency="true" scrolling="no" class="loading" frameborder="0" ' +

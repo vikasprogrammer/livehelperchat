@@ -8,25 +8,25 @@ $ViewList['departaments'] = array(
     'script' => 'departaments.php',
     'params' => array(),
     'functions' => array( 'list' )
-    );
+);
 
 $ViewList['new'] = array(
     'script' => 'new.php',
     'params' => array(),
     'functions' => array( 'create' )
-    );
+);
 
 $ViewList['edit'] = array(
     'script' => 'edit.php',
     'params' => array('departament_id'),
     'functions' => array( 'edit' )
-    );
+);
 
 $ViewList['delete'] = array(
     'script' => 'delete.php',
     'params' => array('departament_id'),
     'functions' => array( 'delete' )
-    );
+);
 
 $ViewList['assigntouser'] = array(
 		'script' => 'assigntouser.php',
@@ -39,5 +39,6 @@ $FunctionList['create'] = array('explain' => 'Create new department');
 $FunctionList['edit'] = array('explain' => 'Edit department');
 $FunctionList['delete'] = array('explain' => 'Allow to delete department');
 $FunctionList['selfedit'] = array('explain' => 'Allow user to choose his departments');
+$FunctionList['manage_instance'] = array('explain' => 'Allow user to manage departments at instance level');
 
 ?>

@@ -8,8 +8,10 @@
 	<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Name');?></label>
     <input type="text" name="Name"  value="<?php echo htmlspecialchars($departament->name);?>" />
 
-    <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Instance ID');?></label>
-    <input type="text" name="InstanceID"  value="<?php echo htmlspecialchars($departament->instance_id);?>" />
+    <?php if ($current_user->hasAccessTo('lhdepartament','manage_instance')) : ?>
+    	<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Instance ID');?></label>
+    	<input type="text" name="InstanceID"  value="<?php echo htmlspecialchars($departament->instance_id);?>" />
+	<?php endif;?>
 
     <ul class="button-group radius">
     <li><input type="submit" class="small button" name="Save_departament" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/new','Save');?>"/></li>

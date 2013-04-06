@@ -11,11 +11,14 @@
 <form action="<?php echo erLhcoreClassDesign::baseurl('instance/editinstance')?>/<?php echo $instance->id?>" method="post">
 
     <?php include(erLhcoreClassDesign::designtpl('lhinstance/form.tpl.php'));?>
+	<br>
+	<br>
 
 	<ul class="button-group radius">
       <li><input type="submit" class="small button" name="Save_instance" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/edit','Save');?>"/></li>
       <li><input type="submit" class="small button" name="Update_instance" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/edit','Update');?>"/></li>
       <li><input type="submit" class="small button" name="Cancel_instance" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/edit','Cancel');?>"/></li>
     </ul>
+
 
 </form>

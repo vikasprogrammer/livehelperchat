@@ -24,13 +24,16 @@ if (isset($_POST['AssignInstance'])) {
 
 	if (count($Errors) == 0) {
 
-		erLhcoreClassModelInstanceUser::removeInstancesFromUser($user->id);
-
 		foreach ($instancesArray as $instance_id) {
+			erLhcoreClassModelInstanceUser::removeInstanceFromUser($instance_id, $user->id);
 			$instanceUser = new erLhcoreClassModelInstanceUser();
 			$instanceUser->instance_id = $instance_id;
 			$instanceUser->user_id = $user->id;
 			$instanceUser->saveThis();
+		}
+
+		if (isset($_SESSION['lhCacheUserInstances_'.$user->id])){
+			unset($_SESSION['lhCacheUserInstances_'.$user->id]);
 		}
 
 		$tpl->set('assigned',true);

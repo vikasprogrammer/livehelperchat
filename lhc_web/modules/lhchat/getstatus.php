@@ -16,5 +16,13 @@ $tpl->set('position',$Params['user_parameters_unordered']['position']);
 $tpl->set('hide_offline',$Params['user_parameters_unordered']['hide_offline']);
 $tpl->set('check_operator_messages',$Params['user_parameters_unordered']['check_operator_messages']);
 
+$instance = (is_numeric($Params['user_parameters_unordered']['instance']) && $Params['user_parameters_unordered']['instance'] > 0) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+$tpl->set('instance',$instance);
+
+$tpl->set('instance_url','');
+if ($instance !== false) {
+	$tpl->set('instance_url','/(instance)/'.$instance);
+}
+
 echo $tpl->fetch();
 exit;
