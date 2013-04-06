@@ -57,6 +57,8 @@ if (isset($_POST['StartChat'])) {
 
        erLhcoreClassModelChat::detectLocation($chat);
 
+       $chat->original_instance_id = $instance;
+
        // Store chat
        $chat->saveThis();
 

@@ -86,12 +86,14 @@ if (isset($_POST['Update']))
     $form = new ezcInputForm( INPUT_POST, $definition );
     $Errors = array();
 
-    if ( !$form->hasValidData( 'Username' ) ) {
-        $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Please enter username!');
-    }  elseif ( $form->hasValidData( 'Username' ) && $form->Username != $UserData->username && !erLhcoreClassModelUser::userExists($form->Username) ) {
-    	$UserData->username = $form->Username;
-    } elseif ( $form->hasValidData( 'Username' ) && $form->Username != $UserData->username) {
-    	$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','User exists!');
+    if ($currentUser->hasAccessTo('lhuser','change_login_data')) {
+	    if ( !$form->hasValidData( 'Username' ) ) {
+	        $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Please enter username!');
+	    }  elseif ( $form->hasValidData( 'Username' ) && $form->Username != $UserData->username && !erLhcoreClassModelUser::userExists($form->Username) ) {
+	    	$UserData->username = $form->Username;
+	    } elseif ( $form->hasValidData( 'Username' ) && $form->Username != $UserData->username) {
+	    	$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','User exists!');
+	    }
     }
 
     if ( !$form->hasValidData( 'Email' ) )
@@ -117,11 +119,13 @@ if (isset($_POST['Update']))
 
     if (count($Errors) == 0)
     {
-        // Update password if neccesary
-        if ( $form->hasInputField( 'Password' ) && $form->hasInputField( 'Password1' ) && $form->Password != '' )
-        {
-            $UserData->setPassword($form->Password);
-        }
+    	if ($currentUser->hasAccessTo('lhuser','change_login_data')) {
+	        // Update password if neccesary
+	        if ( $form->hasInputField( 'Password' ) && $form->hasInputField( 'Password1' ) && $form->Password != '' )
+	        {
+	            $UserData->setPassword($form->Password);
+	        }
+    	}
 
         $UserData->email   = $form->Email;
         $UserData->name    = $form->Name;
@@ -141,7 +145,6 @@ $allowEditDepartaments = $currentUser->hasAccessTo('lhuser','editdepartaments');
 
 if ($allowEditDepartaments && isset($_POST['UpdateDepartaments_account']))
 {
-
    $globalDepartament = array();
    if (isset($_POST['all_departments']) && $_POST['all_departments'] == 'on') {
        $UserData->all_departments = 1;

@@ -10,8 +10,8 @@ class erLhcoreClassModelTransfer {
                'chat_id'  			 => $this->chat_id,
                'transfer_user_id'  	 => $this->transfer_user_id,
                'from_dep_id'  		 => $this->from_dep_id,
-               'to_instance_id'  	 => $this->to_instance_id,
                'transfer_to_user_id' => $this->transfer_to_user_id,
+               'instance_id' 		 => $this->instance_id,
        );
    }
 
@@ -34,7 +34,7 @@ class erLhcoreClassModelTransfer {
    public $transfer_user_id = 0;
    public $from_dep_id = null;
    public $transfer_to_user_id = 0;
-   public $to_instance_id = 0;
+   public $instance_id = 0;
 }
 
 ?>

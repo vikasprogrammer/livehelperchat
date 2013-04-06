@@ -68,5 +68,6 @@ $tpl->set('user',$user);
 
 $Result['content'] = $tpl->fetch();
 $Result['pagelayout'] = 'popup';
+$Result['adjust_size_colorbox'] = true;
 
 ?>

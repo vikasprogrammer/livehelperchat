@@ -20,10 +20,7 @@
 <?php if(isset($Result['adjust_size_colorbox'])):?>
    <script type="text/javascript">
 $(document).ready(function() {
-    parent.$.fn.colorbox.resize({
-        innerWidth: $(document).width(),
-        innerHeight: $(document).height()
-    });
+    parent.$.fn.colorbox.resize({innerHeight: $(document).height()});
 });
 </script>
 <?php endif;?>

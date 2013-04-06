@@ -386,7 +386,7 @@ function lh(){
 
 	this.startChatNewWindow = function(chat_id,name)
 	{
-	    window.open(this.wwwDir + 'chat/single/'+chat_id,'chatwindow'+name+chat_id,"menubar=1,resizable=1,width=600,height=450");
+	    window.open(this.wwwDir + 'chat/single/'+chat_id,'chatwindow'+name+chat_id,"menubar=1,resizable=1,width=780,height=450");
 	    this.syncadmininterfacestatic();
         return false;
 	};
@@ -439,7 +439,7 @@ function lh(){
 
 	this.chatTabsOpen = function ()
 	{
-	    window.open(this.wwwDir + 'chat/chattabs/','chatwindows',"menubar=1,resizable=1,width=580,height=460");
+	    window.open(this.wwwDir + 'chat/chattabs/','chatwindows',"menubar=1,resizable=1,width=740,height=460");
 	    return false;
 	};
 
@@ -626,7 +626,7 @@ function lh(){
 
 	this.transferUserDialog = function(chat_id,title)
 	{
-		$.colorbox({'iframe':true,width:'740px',height:'400px', href:this.wwwDir + 'chat/transferchat/'+chat_id});
+		$.colorbox({'iframe':true,width:'760px',height:'400px', href:this.wwwDir + 'chat/transferchat/'+chat_id});
 	};
 
     this.addmsgadmin = function (chat_id)

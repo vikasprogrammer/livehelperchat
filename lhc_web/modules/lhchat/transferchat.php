@@ -23,6 +23,10 @@ if ( erLhcoreClassChat::hasAccessToRead($chat) )
 				// Original department id
 				$Transfer->from_dep_id = $chat->dep_id;
 
+				// Assign correct department
+				$departmenttDestination = erLhcoreClassModelDepartament::fetch($Transfer->dep_id);
+				$Transfer->instance_id = $departmenttDestination->instance_id;
+
 				// User which is transfering
 				$Transfer->transfer_user_id = $currentUser->getUserID();
 
@@ -36,7 +40,6 @@ if ( erLhcoreClassChat::hasAccessToRead($chat) )
 			$tpl->set('errors',array('Please choose department'));
 		}
 	}
-
 
 	if (isset($_POST['TransferToUser'])) {
 
