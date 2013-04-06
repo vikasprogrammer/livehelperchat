@@ -1,11 +1,13 @@
 <?php
 
-if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget')) !== false) {
+$instance = (is_numeric($Params['user_parameters_unordered']['instance']) && $Params['user_parameters_unordered']['instance'] > 0) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+
+if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget_'.$instance)) !== false) {
 
     list($chatID,$hash) = explode('_',$hashSession);
 
     // Remove chat from chat widget, from now user will be communicating using popup window
-    CSCacheAPC::getMem()->setSession('chat_hash_widget',false);
+    CSCacheAPC::getMem()->setSession('chat_hash_widget_'.$instance,false);
 
     // Redirect user
     erLhcoreClassModule::redirect('chat/chat/' . $chatID . '/' . $hash);
@@ -19,7 +21,7 @@ $tpl->set('referer','');
 $startData = erLhcoreClassModelChatConfig::fetch('start_chat_data');
 $startDataFields = (array)$startData->data;
 
-$instance = (is_numeric($Params['user_parameters_unordered']['instance']) && $Params['user_parameters_unordered']['instance'] > 0) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+
 $tpl->set('instance',$instance);
 
 $tpl->set('instance_url','');

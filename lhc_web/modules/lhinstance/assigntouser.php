@@ -32,6 +32,12 @@ if (isset($_POST['AssignInstance'])) {
 			$instanceUser->saveThis();
 		}
 
+		erLhcoreClassUserDep::deleteUserDepartament(0, $user->id);
+
+		if ($user->all_departments == 1) {
+			erLhcoreClassUserDep::addUserDepartament(0, $user->id, $user);
+		}
+
 		if (isset($_SESSION['lhCacheUserInstances_'.$user->id])){
 			unset($_SESSION['lhCacheUserInstances_'.$user->id]);
 		}

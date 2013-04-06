@@ -102,7 +102,7 @@ var lh_inst  = {
         var th = document.getElementsByTagName('head')[0];
         var s = document.createElement('script');
         s.setAttribute('type','text/javascript');
-        s.setAttribute('src','<?php echo erLhcoreClassSystem::instance()->baseHTTP?><?php echo $_SERVER['HTTP_HOST']?><?php echo erLhcoreClassDesign::baseurl('chat/chatwidgetclosed')?>');
+        s.setAttribute('src','<?php echo erLhcoreClassSystem::instance()->baseHTTP?><?php echo $_SERVER['HTTP_HOST']?><?php echo erLhcoreClassDesign::baseurl('chat/chatwidgetclosed')?><?php echo $instance_url?>');
         th.appendChild(s);
         this.removeById('lhc_container');
         <?php if ($check_operator_messages == 'true') : ?>
@@ -205,7 +205,7 @@ lh_inst.showStatusWidget();
 <?php endif;
 
 // User has pending chat
-if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget')) !== false) : ?>
+if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget_'.$instance)) !== false) : ?>
    lh_inst.stopCheckNewMessage();
    lh_inst.showStartWindow();
 <?php elseif (isset($visitor) && is_object($visitor) && $visitor->has_message_from_operator == true) : ?>

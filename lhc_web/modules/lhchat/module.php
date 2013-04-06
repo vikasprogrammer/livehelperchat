@@ -181,9 +181,10 @@ $ViewList['chatwidget'] = array (
 	'uparams' => array('instance')
 );
 
-$ViewList['readoperatormessage'] = array(
+$ViewList['readoperatormessage'] = array (
     'script' => 'readoperatormessage.php',
-    'params' => array()
+    'params' => array(),
+	'uparams' => array('instance')
 );
 
 $ViewList['chatcheckoperatormessage'] = array(
@@ -193,7 +194,8 @@ $ViewList['chatcheckoperatormessage'] = array(
 
 $ViewList['chatwidgetclosed'] = array(
     'script' => 'chatwidgetclosed.php',
-    'params' => array()
+    'params' => array(),
+	'uparams' => array('instance'),
 );
 
 $ViewList['chat'] = array(

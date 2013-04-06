@@ -163,6 +163,12 @@ if (isset($_POST['RemoveSelectedInstance'])) {
 		foreach ($_POST['UserInstances'] as $instanceID) {
 			erLhcoreClassModelInstanceUser::removeInstanceFromUser($instanceID, $UserData->id);
 		}
+
+		erLhcoreClassUserDep::deleteUserDepartament(0, $UserData->id);
+
+		if ($UserData->all_departments == 1) {
+			erLhcoreClassUserDep::addUserDepartament(0, $UserData->id, $UserData);
+		}
 	}
 	$tpl->set('account_updated_instances','done');
 }

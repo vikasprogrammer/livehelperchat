@@ -3,7 +3,9 @@
 // For IE to support headers if chat is installed on different domain
 header('P3P: CP="NOI ADM DEV COM NAV OUR STP"');
 
-if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget')) !== false) {
+$instance = is_numeric($Params['user_parameters_unordered']['instance']) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+
+if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget_'.$instance)) !== false) {
 
     list($chatID,$hash) = explode('_',$hashSession);
 
@@ -15,7 +17,7 @@ if (($hashSession = CSCacheAPC::getMem()->getSession('chat_hash_widget')) !== fa
 $tpl = erLhcoreClassTemplate::getInstance( 'lhchat/chatwidget.tpl.php');
 $tpl->set('referer','');
 
-$instance = is_numeric($Params['user_parameters_unordered']['instance']) ? (int)$Params['user_parameters_unordered']['instance'] : false;
+
 $tpl->set('instance',$instance);
 
 $tpl->set('instance_url','');
@@ -87,7 +89,7 @@ if (isset($_POST['StartChat']))
        }
 
        // Store hash if user reloads page etc, we show widget
-       CSCacheAPC::getMem()->setSession('chat_hash_widget',$chat->id.'_'.$chat->hash);
+       CSCacheAPC::getMem()->setSession('chat_hash_widget_'.$instance,$chat->id.'_'.$chat->hash);
 
        // Redirect user
        erLhcoreClassModule::redirect('chat/chatwidgetchat/' . $chat->id . '/' . $chat->hash);
