@@ -287,9 +287,10 @@ $FunctionList['allowcloseremote'] = array('explain' =>'Allow user to close anoth
 $FunctionList['allowblockusers'] = array('explain' =>'Allow user to block users');
 $FunctionList['administrateconfig'] = array('explain' =>'Allow to change chat config');
 $FunctionList['allowclearonlinelist'] = array('explain' =>'Allow use to clean online users list');
-$FunctionList['administratecannedmsg'] = array('explain' =>'Allow use change canned messages');
-$FunctionList['track_online_users'] = array('explain' =>'Allow use change canned messages');
-$FunctionList['transfer_global'] = array('explain' =>'Allow use transfer chats between instances');
+$FunctionList['administratecannedmsg'] = array('explain' =>'Allow user change canned messages');
+$FunctionList['track_online_users'] = array('explain' =>'Allow user to track online users');
+$FunctionList['transfer_global'] = array('explain' =>'Allow user transfer chats between instances');
+$FunctionList['allow_list_blocked_users'] = array('explain' =>'Allow user to list blocked users');
 
 
 

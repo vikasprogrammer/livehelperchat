@@ -12,7 +12,7 @@
     <li><a href="<?php echo erLhcoreClassDesign::baseurl('system/htmlcode')?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('system/configuration','HTML code');?></a></li>
     <?php endif; ?>
 
-    <?php if ($currentUser->hasAccessTo('lhchat','allowblockusers')) : ?>
+    <?php if ($currentUser->hasAccessTo('lhchat','allow_list_blocked_users')) : ?>
     <li><a href="<?php echo erLhcoreClassDesign::baseurl('chat/blockedusers')?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('system/configuration','Blocked users');?></a></li>
     <?php endif; ?>
 
@@ -32,6 +32,9 @@
     <?php endif; ?>
 
 </ul>
+
+
+<?php if ($currentUser->hasAccessTo('lhuser','see_permision_block')) : ?>
 <hr>
 <h4><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('system/configuration','Users and their permissions');?></h4>
 <ul class="circle">
@@ -47,6 +50,9 @@
     <li><a href="<?php echo erLhcoreClassDesign::baseurl('permission/roles')?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('system/configuration','List of roles');?></a></li>
     <?php endif; ?>
 </ul>
+<?php endif; ?>
+
+
 <?php if ($currentUser->hasAccessTo('lhsystem','expirecache')) : ?>
 <hr>
 <h4><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('system/configuration','Other');?></h4>
