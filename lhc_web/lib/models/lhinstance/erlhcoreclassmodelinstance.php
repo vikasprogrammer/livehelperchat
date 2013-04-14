@@ -7,6 +7,8 @@ class erLhcoreClassModelInstance {
        return array(
                'id'              		=> $this->id,
                'name'            		=> $this->name,
+               'domain'            		=> $this->domain,
+               'email'            		=> $this->email,
                'remote_instance_id'     => $this->remote_instance_id,
                'status'            		=> $this->status
        );
@@ -66,10 +68,10 @@ class erLhcoreClassModelInstance {
 
    public $id = null;
    public $name = '';
+   public $domain = '';
+   public $email = '';
    public $status = self::STATUS_ACTIVE;
    public $remote_instance_id = 0;
-
-
 }
 
 ?>

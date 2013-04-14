@@ -28,6 +28,10 @@ class erLhcoreClassModelDepartament {
    		return $GLOBALS['lhCacheDepartmentDepartaments_'.$dep_id];
    }
 
+   public function saveThis() {
+   		erLhcoreClassDepartament::getSession()->saveOrUpdate($this);
+   }
+
    public function __toString() {
    		return $this->name;
    }

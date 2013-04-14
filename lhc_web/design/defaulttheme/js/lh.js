@@ -399,10 +399,13 @@ function lh(){
 
 	this.startChatNewWindowTransfer = function(chat_id,name,transfer_id)
 	{
-	    $.getJSON(this.wwwDir + this.accepttransfer + transfer_id ,{}, function(data){
-
+	    jQuery.ajax({
+	         url:    this.wwwDir + this.accepttransfer + transfer_id,
+	         success: function(result) {},
+	         async:   false
 	    });
-	    return this.startChatNewWindow(chat_id,name);
+
+	    this.startChatNewWindow(chat_id,name);
 	};
 
 	this.blockUser = function(chat_id,msg) {
