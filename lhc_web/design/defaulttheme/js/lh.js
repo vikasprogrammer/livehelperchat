@@ -63,9 +63,6 @@ function lh(){
     this.chatsSynchronising = [];
     this.chatsSynchronisingMsg = [];
 
-    // chat tabs window pointer
-    this.chattabs = null;
-
     // Block synchronization till message add finished
     this.underMessageAdd = false;
 
@@ -293,7 +290,7 @@ function lh(){
 	    });
 
 	    if ($('#CSChatMessage-'+chat_id).length != 0){
-	       $('#CSChatMessage-'+chat_id).unbind('keydown', 'enter', function(){});
+	       $('#CSChatMessage-'+chat_id).unbind('keyup', 'enter', function(){});
 	    };
 
 	    if (hidetab == true) {
@@ -320,7 +317,7 @@ function lh(){
 	this.removeDialogTab = function(chat_id, tabs, hidetab)
 	{
 	    if ($('#CSChatMessage-'+chat_id).length != 0){
-	       $('#CSChatMessage-'+chat_id).unbind('keydown', 'enter', function(){});
+	       $('#CSChatMessage-'+chat_id).unbind('keyup', 'enter', function(){});
 	    }
 
 	    if (hidetab == true) {
@@ -346,7 +343,7 @@ function lh(){
 	this.deleteChat = function(chat_id, tabs, hidetab)
 	{
 	    if ($('#CSChatMessage-'+chat_id).length != 0){
-	       $('#CSChatMessage-'+chat_id).unbind('keydown', 'enter', function(){});
+	       $('#CSChatMessage-'+chat_id).unbind('keyup', 'enter', function(){});
 	    }
 
 	    $.getJSON(this.wwwDir + this.deletechatadmin + chat_id ,{}, function(data){
@@ -441,11 +438,6 @@ function lh(){
 	{
 	    window.open(this.wwwDir + 'chat/chattabs/','chatwindows',"menubar=1,resizable=1,width=740,height=460");
 	    return false;
-	};
-
-	this.deleteChatNewWindow = function()
-	{
-	    this.chattabs = null;
 	};
 
 	this.userclosedchat = function()

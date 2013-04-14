@@ -58,7 +58,6 @@ $transferchats = erLhcoreClassTransfer::getTransferChats();
 $tpl->set('transferchats',$transferchats);
 $ReturnMessages[] = array('dom_id_status' => '.tru-cnt', 'dom_item_count' => count($transferchats), 'dom_id' => '#right-transfer-chats', 'content' => trim($tpl->fetch('lhchat/lists/transferedchats.tpl.php')));
 
-
 // Transfered chats to departments
 $transferchats = erLhcoreClassTransfer::getTransferChats(array('department_transfers' => true));
 $tpl->set('transferchats',$transferchats);

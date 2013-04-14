@@ -26,6 +26,8 @@ class erLhcoreClassModelChat {
                'last_user_msg_time'     => $this->last_user_msg_time,
                'instance_id'     		=> $this->instance_id,
                'original_instance_id'   => $this->original_instance_id,
+               'last_msg_id'     		=> $this->last_msg_id
+
        );
    }
 
@@ -165,7 +167,7 @@ class erLhcoreClassModelChat {
    public $last_user_msg_time = 0;
    public $instance_id = 0;
    public $original_instance_id = 0;
-
+   public $last_msg_id = 0;
 }
 
 ?>

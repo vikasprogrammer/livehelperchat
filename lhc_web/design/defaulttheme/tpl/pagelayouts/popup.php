@@ -17,6 +17,7 @@
 
 <script type="text/javascript" language="javascript" src="<?php echo erLhcoreClassDesign::designJS('js/app.js');?>"></script>
 
+
 <?php if(isset($Result['adjust_size_colorbox'])):?>
    <script type="text/javascript">
 $(document).ready(function() {
@@ -24,6 +25,11 @@ $(document).ready(function() {
 });
 </script>
 <?php endif;?>
+
+<?php if (erConfigClassLhConfig::getInstance()->getSetting( 'site', 'debug_output' ) == true) {
+		$debug = ezcDebug::getInstance();
+		echo $debug->generateOutput();
+} ?>
 
 </body>
 </html>
