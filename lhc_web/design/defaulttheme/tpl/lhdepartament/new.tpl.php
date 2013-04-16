@@ -8,10 +8,20 @@
 	<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Name');?></label>
     <input type="text" name="Name"  value="<?php echo htmlspecialchars($departament->name);?>" />
 
+
     <?php if ($current_user->hasAccessTo('lhdepartament','manage_instance')) : ?>
-    	<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Instance ID');?></label>
-    	<input type="text" name="InstanceID"  value="<?php echo htmlspecialchars($departament->instance_id);?>" />
+    	<label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/edit','Instance');?></label>
+    	<?php echo erLhcoreClassRenderHelper::renderCombobox( array (
+                    'input_name'     => 'InstanceID',
+                    'optional_field' =>  erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Global department'),
+    				'default_value'  => 0,
+                    'display_name'   => 'name',
+    				'selected_id'    => $departament->instance_id,
+                    'list_function'  => 'erLhcoreClassInstance::getList',
+    				'list_function_params' => array('limit' => 100000)
+            )); ?>
 	<?php endif;?>
+
 
     <ul class="button-group radius">
     <li><input type="submit" class="small button" name="Save_departament" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('department/new','Save');?>"/></li>
