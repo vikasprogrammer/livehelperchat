@@ -17,6 +17,9 @@ if (isset($_POST['Save_departament']))
         ),
    		'InstanceID' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'int'
+		),
+        'Email' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'validate_email'
         )
     );
 
@@ -34,19 +37,25 @@ if (isset($_POST['Save_departament']))
     		$Departament->instance_id = $form->InstanceID;
     	}
     } else {
-
     	$Departament->instance_id = erLhcoreClassInstance::getUserDefaultInstanceId($currentUser->getUserID());
-
     	if ($Departament->instance_id == 0){
     		$Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('department/new','Could not determine the instance');
     	}
     }
 
+    if ( $form->hasValidData( 'Email' ) ) {
+    	$Departament->email = $form->Email;
+    } else {
+    	$Departament->email = '';
+    }
+
     if (count($Errors) == 0) {
+
         $Departament->name = $form->Name;
         erLhcoreClassDepartament::getSession()->save($Departament);
         erLhcoreClassModule::redirect('departament/departaments');
-        exit ;
+        exit;
+
     }  else {
         $tpl->set('errors',$Errors);
     }

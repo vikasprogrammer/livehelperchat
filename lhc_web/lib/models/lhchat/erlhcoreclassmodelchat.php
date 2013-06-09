@@ -26,7 +26,9 @@ class erLhcoreClassModelChat {
                'last_user_msg_time'     => $this->last_user_msg_time,
                'instance_id'     		=> $this->instance_id,
                'original_instance_id'   => $this->original_instance_id,
-               'last_msg_id'     		=> $this->last_msg_id
+               'last_msg_id'     		=> $this->last_msg_id,
+               'mail_send'     			=> $this->mail_send,
+               'additional_data'     	=> $this->additional_data
 
        );
    }
@@ -37,6 +39,23 @@ class erLhcoreClassModelChat {
        {
            $this->$key = $val;
        }
+   }
+
+   public function removeThis()
+   {
+	   	$q = ezcDbInstance::get()->createDeleteQuery();
+
+	   	// Messages
+	   	$q->deleteFrom( 'lh_msg' )->where( $q->expr->eq( 'chat_id', $this->id ) );
+	   	$stmt = $q->prepare();
+	   	$stmt->execute();
+
+	   	// Transfered chats
+	   	$q->deleteFrom( 'lh_transfer' )->where( $q->expr->eq( 'chat_id', $this->id ) );
+	   	$stmt = $q->prepare();
+	   	$stmt->execute();
+
+	   	erLhcoreClassChat::getSession()->delete($this);
    }
 
    public static function fetch($chat_id) {
@@ -146,9 +165,14 @@ class erLhcoreClassModelChat {
        }
    }
 
+   const STATUS_PENDING_CHAT = 0;
+   const STATUS_ACTIVE_CHAT = 1;
+   const STATUS_CLOSED_CHAT = 2;
+   const STATUS_CHATBOX_CHAT = 3;
+
    public $id = null;
    public $nick = '';
-   public $status = 0;
+   public $status = self::STATUS_PENDING_CHAT;
    public $time = '';
    public $user_id = '';
    public $hash = '';
@@ -168,6 +192,8 @@ class erLhcoreClassModelChat {
    public $instance_id = 0;
    public $original_instance_id = 0;
    public $last_msg_id = 0;
+   public $mail_send = 0;
+   public $additional_data = '';
 }
 
 ?>

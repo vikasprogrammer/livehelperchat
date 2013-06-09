@@ -1,5 +1,5 @@
 <div class="row status-row">
-    <div class="columns three">
+    <div class="columns large-3">
             <h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Actions')?></h5>
             <p>
             <img class="action-image" align="absmiddle" onclick="lhinst.removeDialogTab('<?php echo $chat->id?>',$('#tabs'),true)" src="<?php echo erLhcoreClassDesign::design('images/icons/application_delete.png');?>" alt="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Close dialog')?>" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Close dialog')?>">
@@ -7,17 +7,26 @@
             <img class="action-image" align="absmiddle" onclick="lhinst.deleteChat('<?php echo $chat->id?>',$('#tabs'),true)" src="<?php echo erLhcoreClassDesign::design('images/icons/delete.png');?>" alt="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Delete chat')?>" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Delete chat')?>">
             <img class="action-image" align="absmiddle" onclick="lhinst.transferUserDialog('<?php echo $chat->id?>','<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Transfer chat')?>')" src="<?php echo erLhcoreClassDesign::design('images/icons/user_go.png');?>" alt="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Transfer chat')?>" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Transfer chat')?>">
             <img class="action-image" align="absmiddle" onclick="lhinst.blockUser('<?php echo $chat->id?>','<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Are you sure?')?>')" src="<?php echo erLhcoreClassDesign::design('images/icons/user_delete.png');?>" alt="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Block user')?>" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Block user')?>">
+            <img class="action-image" align="absmiddle" onclick="lhinst.sendMail('<?php echo $chat->id?>')" src="<?php if ($chat->mail_send == 0) : ?><?php echo erLhcoreClassDesign::design('images/icons/email.png');?><?php else : ?><?php echo erLhcoreClassDesign::design('images/icons/email-send.png');?><?php endif; ?>" alt="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Send mail')?>" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Send mail')?>">
             </p>
 
     </div>
-    <div class="columns six">
+    <div class="columns large-6">
     <h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Information')?></h5>
     <p>
-    <?php if ( !empty($chat->country_code) ) : ?><img src="<?php echo erLhcoreClassDesign::design('images/flags');?>/<?php echo $chat->country_code?>.png" alt="<?php echo htmlspecialchars($chat->country_name)?>" title="<?php echo htmlspecialchars($chat->country_name)?>" /><?php endif; ?> | IP - <?php echo $chat->ip?><?php if (!empty($chat->referrer)) : ?> | <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Come from')?> - <?php echo $chat->referrer != '' ? htmlspecialchars($chat->referrer) : ''?><?php endif;?> | ID - <?php echo $chat->id;?><?php if (!empty($chat->email)) : ?> | <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','E-mail')?> - <a href="mailto:<?php echo $chat->email?>"><?php echo $chat->email?></a><?php endif;?><?php if (!empty($chat->phone)) : ?> | <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Phone')?> - <?php echo htmlspecialchars($chat->phone)?><?php endif;?>
+		<ul class="square params-list">
+    		<?php if ( !empty($chat->country_code) ) : ?><li><img src="<?php echo erLhcoreClassDesign::design('images/flags');?>/<?php echo $chat->country_code?>.png" alt="<?php echo htmlspecialchars($chat->country_name)?>" title="<?php echo htmlspecialchars($chat->country_name)?>" /></li><?php endif; ?>
+    		<li>IP - <?php echo $chat->ip?></li>
+    		<?php if (!empty($chat->referrer)) : ?><li><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Come from')?> -  <?php echo $chat->referrer != '' ? htmlspecialchars($chat->referrer) : ''?></li><?php endif;?>
+    		<li>ID - <?php echo $chat->id;?></li>
+    		<?php if (!empty($chat->email)) : ?><li><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','E-mail')?> - <a href="mailto:<?php echo $chat->email?>"><?php echo $chat->email?></a></li><?php endif;?>
+    		<?php if (!empty($chat->phone)) : ?><li><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Phone')?> - <?php echo htmlspecialchars($chat->phone)?></li><?php endif;?>
+    		<?php if (!empty($chat->additional_data)) : ?><li><?php echo htmlspecialchars($chat->additional_data)?></li><?php endif;?>
+    	</ul>
     </p>
     </div>
 
-    <div class="columns three">
+    <div class="columns large-3">
     <h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Chat owner')?></h5>
     <p>
             <?php $user = $chat->getChatOwner();
@@ -30,15 +39,12 @@
 
 <div class="message-block">
     <div class="msgBlock" id="messagesBlock-<?php echo $chat->id?>">
-    <?php $LastMessageID = 0;?>
-    <?php foreach (erLhcoreClassChat::getChatMessages($chat->id) as $msg ) : ?>
-    <?php $LastMessageID = $msg['id'];
-    if ($msg['user_id'] != 0) { ?>
-    	<div class="message-row"><div class="msg-date"><?php echo date('Y-m-d H:i:s',$msg['time']);?></div><span class="usr-tit"><?php echo htmlspecialchars($msg['name_support']);?>:&nbsp;</span><?php echo erLhcoreClassBBCode::make_clickable(htmlspecialchars($msg['msg']))?></div>
-    <?php } else { ?>
-        <div class="message-row response"><div class="msg-date"><?php echo date('Y-m-d H:i:s',$msg['time']);?></div><span class="usr-tit"><?php echo htmlspecialchars($chat->nick)?>:&nbsp;</span><?php echo erLhcoreClassBBCode::make_clickable(htmlspecialchars($msg['msg']))?></div>
-    <?php } ?>
-    <?php endforeach; ?>
+    <?php
+    $LastMessageID = 0;
+    $messages = erLhcoreClassChat::getChatMessages($chat->id); ?>
+
+    <?php include(erLhcoreClassDesign::designtpl('lhchat/syncadmin.tpl.php'));?>
+    <?php if (isset($msg)) { $LastMessageID = $msg['id'];} ?>
 
     <?php if ($chat->user_status == 1) : ?>
     	<?php include(erLhcoreClassDesign::designtpl('lhchat/userleftchat.tpl.php')); ?>
@@ -62,8 +68,8 @@ lhinst.initTypingMonitoringAdmin('<?php echo $chat->id?>');
 </script>
 
 <div class="row">
-    <div class="columns four"><input type="button" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Send')?>" class="small button round" onclick="lhinst.addmsgadmin('<?php echo $chat->id?>')" /></div>
-    <div class="columns eight">
+    <div class="columns small-4"><input type="button" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/adminchat','Send')?>" class="small button round" onclick="lhinst.addmsgadmin('<?php echo $chat->id?>')" /></div>
+    <div class="columns small-8">
     <?php echo erLhcoreClassRenderHelper::renderCombobox( array (
                     'input_name'     => 'CannedMessage-'.$chat->id,
                     'on_change'      => "$('#CSChatMessage-".$chat->id."').val(($(this).val() > 0) ? $(this).find(':selected').text() : '')",

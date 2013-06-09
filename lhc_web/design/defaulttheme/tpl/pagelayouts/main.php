@@ -1,21 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
-<head>
-<?php include_once(erLhcoreClassDesign::designtpl('pagelayouts/parts/page_head.tpl.php'));?>
-</head>
+<html lang="<?php echo erConfigClassLhConfig::getInstance()->getOverrideValue('site', 'content_language')?>" dir="<?php echo erConfigClassLhConfig::getInstance()->getOverrideValue('site', 'dir_language')?>">
+	<head>
+		<?php include_once(erLhcoreClassDesign::designtpl('pagelayouts/parts/page_head.tpl.php'));?>
+	</head>
 <body>
 
 <div class="content-row">
 <div class="row">
-<div class="columns twelve">
+<div class="columns large-12">
 
 <div class="row">
-    <div class="columns six">
+    <div class="columns large-6">
         <?php include_once(erLhcoreClassDesign::designtpl('pagelayouts/parts/page_head_logo_back_office.tpl.php'));?>
     </div>
-    <div class="columns six">
+    <div class="columns large-6">
         <?php include_once(erLhcoreClassDesign::designtpl('pagelayouts/parts/user_box.tpl.php'));?>
         <div class="float-break">
         <?php include(erLhcoreClassDesign::designtpl('lhchat/user_settings.tpl.php'));?>
@@ -23,15 +23,14 @@
     </div>
 </div>
 
-
 <?php include_once(erLhcoreClassDesign::designtpl('pagelayouts/parts/top_menu.tpl.php'));?>
 
 <?php include_once(erLhcoreClassDesign::designtpl('pagelayouts/parts/path.tpl.php'));?>
 
 <div class="row">
 
-    <div class="columns eight">
-    <?php echo $Result['content']; ?>
+    <div class="columns large-8">
+    	<?php echo $Result['content']; ?>
     </div>
 
     <?php
@@ -40,27 +39,27 @@
     $closedTabEnabled = erLhcoreClassModelUserSetting::getSetting('enable_close_list',0);
     $unreadTabEnabled = erLhcoreClassModelUserSetting::getSetting('enable_unread_list',1);
     ?>
-    <div class="columns four" id="right-column-page">
+    <div class="columns large-4" id="right-column-page">
 
-    		<dl class="tabs">
-			    <dd class="active"><a href="#simpleAssignYou1" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Chats transfered to you directly');?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Transfered to you');?> <span class="tru-cnt"></span></a></dd>
-			    <dd><a href="#simpleAssignYou2" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Chats transfered to your department');?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Transfered to your department');?> <span class="trd-cnt"></span></a></dd>
-			</dl>
-
-			<ul class="tabs-content">
-			  <li id="simpleAssignYou1Tab" class="active">
-			  		<div id="right-transfer-chats">
+			<div class="section-container auto" data-section="auto">
+			  <section>
+			    <p class="title" data-section-title><a title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Chats transfered to you directly');?>" href="#panel1"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Transfered to you');?><span class="tru-cnt"></span></a></p>
+			    <div class="content" data-section-content>
+			      <div id="right-transfer-chats">
 		        		<p><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Empty...');?></p>
 		            </div>
-			  </li>
-			  <li id="simpleAssignYou2Tab" >
-			  		<div id="right-transfer-departments">
+			    </div>
+			  </section>
+			  <section>
+			    <p class="title" data-section-title><a href="#panel2"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Transfered to your department');?><span class="trd-cnt"></span></a></p>
+			    <div class="content" data-section-content>
+			      <div id="right-transfer-departments">
 		        		<p><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Empty...');?></p>
 		            </div>
-			  </li>
-			</ul>
+			    </div>
+			  </section>
+			</div>
 
-        	<hr>
     		<?php if ($pendingTabEnabled == true) : ?>
 			<h5><a href="<?php echo erLhcoreClassDesign::baseurl('chat/pendingchats')?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('pagelayout/pagelayout','Pending chats');?></a></h5>
     		<div id="right-pending-chats">

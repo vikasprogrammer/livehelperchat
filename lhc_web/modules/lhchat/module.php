@@ -21,13 +21,25 @@ $ViewList['closechatadmin'] = array(
     'script' => 'closechatadmin.php',
     'params' => array('chat_id'),
     'functions' => array( 'use' )
-    );
+);
+
+$ViewList['notificationsettings'] = array(
+    'script' => 'notificationsettings.php',
+    'params' => array(),
+    'functions' => array( 'use' )
+);
 
 $ViewList['closechat'] = array(
     'script' => 'closechat.php',
     'params' => array('chat_id'),
     'functions' => array( 'use' )
-    );
+);
+
+$ViewList['sendmail'] = array(
+    'script' => 'sendmail.php',
+    'params' => array('chat_id'),
+    'functions' => array( 'use' )
+);
 
 $ViewList['transferchat'] = array(
     'script' => 'transferchat.php',
@@ -166,19 +178,25 @@ $ViewList['blockedusers'] = array(
 $ViewList['getstatus'] = array (
     'script' => 'getstatus.php',
     'params' => array(),
-    'uparams' => array('instance','click','position','hide_offline','check_operator_messages'),
-    );
+    'uparams' => array('instance','click','position','hide_offline','check_operator_messages','top','units','leaveamessage'),
+);
 
 $ViewList['startchat'] = array (
     'script' => 'startchat.php',
     'params' => array(),
-    'uparams' => array('instance'),
+    'uparams' => array('instance','leaveamessage','offline'),
+);
+
+$ViewList['getstatusembed'] = array(
+    'script' => 'getstatusembed.php',
+    'params' => array(),
+    'uparams' => array('hide_offline','leaveamessage'),
 );
 
 $ViewList['chatwidget'] = array (
     'script' => 'chatwidget.php',
     'params' => array(),
-	'uparams' => array('instance')
+	'uparams' => array('instance','mode','offline','leaveamessage')
 );
 
 $ViewList['readoperatormessage'] = array (
@@ -205,7 +223,8 @@ $ViewList['chat'] = array(
 
 $ViewList['chatwidgetchat'] = array(
     'script' => 'chatwidgetchat.php',
-    'params' => array('chat_id','hash')
+    'params' => array('chat_id','hash'),
+	'uparams' => array('mode')
 );
 
 $ViewList['userclosechat'] = array(
@@ -276,21 +295,21 @@ $ViewList['cannedmsgedit'] = array(
     'functions' => array( 'administratecannedmsg' )
 );
 
-
-$FunctionList['use'] = array('explain' => 'General chat usage permission');
+$FunctionList['use'] = array('explain' => 'General permission to use chat module');
 $FunctionList['singlechatwindow'] = array('explain' =>'Allow user to use single chat window functionality');
 $FunctionList['allowchattabs'] = array('explain' =>'Allow user to user chat rooms functionality');
 $FunctionList['deletechat'] = array('explain' =>'Allow user to delete his own chats');
 $FunctionList['deleteglobalchat'] = array('explain' =>'Allow to delete all chats');
 $FunctionList['allowtransfer'] = array('explain' =>'Allow user to transfer chat to another user');
 $FunctionList['allowcloseremote'] = array('explain' =>'Allow user to close another user chat');
-$FunctionList['allowblockusers'] = array('explain' =>'Allow user to block users');
+$FunctionList['allowblockusers'] = array('explain' =>'Allow user to block visitors');
 $FunctionList['administrateconfig'] = array('explain' =>'Allow to change chat config');
 $FunctionList['allowclearonlinelist'] = array('explain' =>'Allow use to clean online users list');
 $FunctionList['administratecannedmsg'] = array('explain' =>'Allow user change canned messages');
 $FunctionList['track_online_users'] = array('explain' =>'Allow user to track online users');
 $FunctionList['transfer_global'] = array('explain' =>'Allow user transfer chats between instances');
 $FunctionList['allow_list_blocked_users'] = array('explain' =>'Allow user to list blocked users');
+$FunctionList['allowopenremotechat'] = array('explain' =>'Allow user to open other users chats from same department');
 
 
 

@@ -80,6 +80,19 @@ return array_merge(array (
 		'erLhcoreClassModelInstanceUser'	=> 'lib/models/lhinstance/erlhcoreclassmodelinstanceuser.php',
 		'erLhcoreClassInstance'				=> 'lib/core/lhinstance/lhinstance.php',
 
+		// FAQ
+		'erLhcoreClassFaq' 			=> 'lib/core/lhfaq/lhfaq.php',
+		'erLhcoreClassModelFaq' 	=> 'lib/models/lhfaq/erlhcoreclassmodelfaq.php',
+
+		// Abstract module
+		'erLhAbstractModelEmailTemplate' => 'lib/models/lhabstract/erlhabstractmodelemailtemplate.php',
+		'erLhcoreClassAbstract' 		 => 'lib/core/lhabstract/lhabstract.php',
+		'erLhcoreClassChatMail' 		 => 'lib/core/lhchat/lhchatmail.php',
+
+		// Chatbox
+		'erLhcoreClassChatbox'			=> 'lib/core/lhchatbox/lhchatbox.php',
+		'erLhcoreClassModelChatbox'		=> 'lib/models/lhchatbox/erlhcoreclassmodelchatbox.php',
+
 ),
 include('var/autoloads/lhextension_autoload.php')
 );

@@ -6,10 +6,13 @@ $Departament = erLhcoreClassDepartament::getSession()->load( 'erLhcoreClassModel
 $currentUser = erLhcoreClassUser::instance();
 $UserData = $currentUser->getUserData();
 
+
 if ( !erLhcoreClassModelInstanceUser::isInstanceOperator($Departament->instance_id, $UserData) ) {
 	erLhcoreClassModule::redirect('departament/departaments');
 	exit;
 }
+
+
 
 if ( isset($_POST['Cancel_departament']) ) {
     erLhcoreClassModule::redirect('departament/departaments');
@@ -24,6 +27,9 @@ if (isset($_POST['Update_departament']) || isset($_POST['Save_departament'])  )
         ),
         'InstanceID' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'int'
+		),
+        'Email' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'validate_email'
         )
     );
 
@@ -33,6 +39,12 @@ if (isset($_POST['Update_departament']) || isset($_POST['Save_departament'])  )
     if ( !$form->hasValidData( 'Name' ) || $form->Name == '' )
     {
         $Errors[] =  erTranslationClassLhTranslation::getInstance()->getTranslation('departament/edit','Please enter departament name');
+    }
+
+    if ( $form->hasValidData( 'Email' ) ) {
+    	$Departament->email = $form->Email;
+    } else {
+    	$Departament->email = '';
     }
 
     if ( $currentUser->hasAccessTo('lhdepartament','manage_instance') ) {
@@ -45,6 +57,7 @@ if (isset($_POST['Update_departament']) || isset($_POST['Save_departament'])  )
     if (count($Errors) == 0)
     {
         $Departament->name = $form->Name;
+
         erLhcoreClassDepartament::getSession()->update($Departament);
 
         if (isset($_POST['Save_departament'])) {

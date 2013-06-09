@@ -20,6 +20,15 @@ if (isset($_POST['URLRefer']))
     $tpl->set('referer',$_POST['URLRefer']);
 }
 
+$embedMode = false;
+$modeAppend = '';
+if ((string)$Params['user_parameters_unordered']['mode'] == 'embed') {
+	$embedMode = true;
+	$modeAppend = '/(mode)/embed';
+}
+
+$tpl->set('append_mode',$modeAppend);
+
 $votingRelative = erLhcoreClassQuestionary::getReletiveVoting($referer);
 
 $answer = new erLhcoreClassModelQuestionAnswer();
@@ -126,5 +135,15 @@ $tpl->set('answer',$answer);
 
 $Result['content'] = $tpl->fetch();
 $Result['pagelayout'] = 'widget';
+$Result['dynamic_height'] = true;
+$Result['dynamic_height_message'] = 'lhc_sizing_questionary';
+$Result['dynamic_height_append'] = 10;
+
+
+
+if ($embedMode == true) {
+	$Result['dynamic_height_message'] = 'lhc_sizing_questionary_page';
+	$Result['pagelayout_css_append'] = 'embed-widget';
+}
 
 ?>

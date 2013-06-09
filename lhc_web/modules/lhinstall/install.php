@@ -75,12 +75,12 @@ switch ((int)$Params['user_parameters']['step_id']) {
 	   $form = new ezcInputForm( INPUT_POST, $definition );
 
 
-	   if ( !$form->hasValidData( 'DatabaseUsername' ) || $form->DatabaseUsername == '' )
+	   if ( !$form->hasValidData( 'DatabaseUsername' ) )
        {
            $Errors[] = 'Please enter database username';
        }
 
-	   if ( !$form->hasValidData( 'DatabasePassword' ) || $form->DatabasePassword == '' )
+	   if ( !$form->hasValidData( 'DatabasePassword' ) )
        {
            $Errors[] = 'Please enter database password';
        }
@@ -103,7 +103,7 @@ switch ((int)$Params['user_parameters']['step_id']) {
        if (count($Errors) == 0)
        {
            try {
-           $db = ezcDbFactory::create( "mysql://{$form->DatabaseUsername}:{$form->DatabasePassword}@{$form->DatabaseHost}:{$form->DatabasePort}/{$form->DatabaseDatabaseName}" );
+           	$db = ezcDbFactory::create( "mysql://{$form->DatabaseUsername}:{$form->DatabasePassword}@{$form->DatabaseHost}:{$form->DatabasePort}/{$form->DatabaseDatabaseName}" );
            } catch (Exception $e) {
                   $Errors[] = 'Cannot login with provided logins. Returned message: <br/>'.$e->getMessage();
            }
@@ -209,7 +209,11 @@ switch ((int)$Params['user_parameters']['step_id']) {
             if (count($Errors) == 0) {
 
                $tpl->set('admin_username',$form->AdminUsername);
-               if ( $form->hasValidData( 'AdminEmail' ) ) $tpl->set('admin_email',$form->AdminEmail);
+               $adminEmail = '';
+               if ( $form->hasValidData( 'AdminEmail' ) ) {
+               		$tpl->set('admin_email',$form->AdminEmail);
+               		$adminEmail = $form->AdminEmail;
+               }
     	       $tpl->set('admin_name',$form->AdminName);
     	       $tpl->set('admin_surname',$form->AdminSurname);
     	       $tpl->set('admin_departament',$form->DefaultDepartament);
@@ -218,32 +222,35 @@ switch ((int)$Params['user_parameters']['step_id']) {
     	       $db = ezcDbInstance::get();
 
         	   $db->query("CREATE TABLE `lh_chat` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `nick` varchar(50) NOT NULL,
-                  `status` int(11) NOT NULL DEFAULT '0',
-                  `time` int(11) NOT NULL,
-                  `user_id` int(11) NOT NULL,
-                  `hash` varchar(40) NOT NULL,
-                  `referrer` text NOT NULL,
-                  `ip` varchar(100) NOT NULL,
-                  `dep_id` int(11) NOT NULL,
-                  `has_unread_messages` int(11) NOT NULL,
-                  `last_user_msg_time` int(11) NOT NULL,
-                  `user_status` int(11) NOT NULL DEFAULT '0',
-                  `support_informed` int(11) NOT NULL DEFAULT '0',
-                  `email` varchar(100) NOT NULL,
-                  `country_code` varchar(100) NOT NULL,
-                  `country_name` varchar(100) NOT NULL,
-                  `user_typing` int(11) NOT NULL,
-                  `operator_typing` int(11) NOT NULL,
-                  `last_msg_id` int(11) NOT NULL,
-                  `phone` varchar(100) NOT NULL,
-                  PRIMARY KEY (`id`),
-                  KEY `user_id` (`user_id`),
-                  KEY `has_unread_messages_dep_id_id` (`has_unread_messages`, `dep_id`, `id`),
-        	   	  KEY `status_dep_id_id` (`status`, `dep_id`, `id`),
-                  KEY `dep_id` (`dep_id`)
-                ) DEFAULT CHARSET=utf8;");
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `nick` varchar(50) NOT NULL,
+				  `status` int(11) NOT NULL DEFAULT '0',
+				  `time` int(11) NOT NULL,
+				  `user_id` int(11) NOT NULL,
+				  `hash` varchar(40) NOT NULL,
+				  `referrer` text NOT NULL,
+				  `ip` varchar(100) NOT NULL,
+				  `dep_id` int(11) NOT NULL,
+				  `user_status` int(11) NOT NULL DEFAULT '0',
+				  `support_informed` int(11) NOT NULL DEFAULT '0',
+				  `email` varchar(100) NOT NULL,
+				  `country_code` varchar(100) NOT NULL,
+				  `country_name` varchar(100) NOT NULL,
+				  `user_typing` int(11) NOT NULL,
+				  `operator_typing` int(11) NOT NULL,
+				  `phone` varchar(100) NOT NULL,
+				  `has_unread_messages` int(11) NOT NULL,
+				  `last_user_msg_time` int(11) NOT NULL,
+				  `last_msg_id` int(11) NOT NULL,
+				  `additional_data` varchar(250) NOT NULL,
+				  `mail_send` int(11) NOT NULL,
+				  PRIMARY KEY (`id`),
+				  KEY `status` (`status`),
+				  KEY `user_id` (`user_id`),
+				  KEY `dep_id` (`dep_id`),
+				  KEY `has_unread_messages_dep_id_id` (`has_unread_messages`,`dep_id`,`id`),
+				  KEY `status_dep_id_id` (`status`,`dep_id`,`id`)
+				) DEFAULT CHARSET=utf8;");
 
         	   $db->query("CREATE TABLE IF NOT EXISTS `lh_chat_blocked_user` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -254,6 +261,38 @@ switch ((int)$Params['user_parameters']['step_id']) {
                   KEY `ip` (`ip`)
                 ) DEFAULT CHARSET=utf8;");
 
+        	   $db->query("CREATE TABLE `lh_faq` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `question` varchar(250) NOT NULL,
+				  `answer` text NOT NULL,
+				  `url` varchar(250) NOT NULL,
+				  `active` int(11) NOT NULL,
+				  `has_url` tinyint(1) NOT NULL,
+				  PRIMARY KEY (`id`),
+				  KEY `active` (`active`),
+				  KEY `active_url` (`active`,`url`),
+				  KEY `has_url` (`has_url`)
+				) DEFAULT CHARSET=utf8;");
+
+        	   $db->query("CREATE TABLE `lh_abstract_email_template` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `name` varchar(250) NOT NULL,
+				  `from_name` varchar(150) NOT NULL,
+				  `from_name_ac` tinyint(4) NOT NULL,
+				  `from_email` varchar(150) NOT NULL,
+				  `from_email_ac` tinyint(4) NOT NULL,
+				  `content` text NOT NULL,
+				  `subject` varchar(250) NOT NULL,
+				  `subject_ac` tinyint(4) NOT NULL,
+				  `reply_to` varchar(150) NOT NULL,
+				  `reply_to_ac` tinyint(4) NOT NULL,
+				  `recipient` varchar(150) NOT NULL,
+				  PRIMARY KEY (`id`)
+				) DEFAULT CHARSET=utf8;");
+
+        	   $db->query("INSERT INTO `lh_abstract_email_template` (`id`, `name`, `from_name`, `from_name_ac`, `from_email`, `from_email_ac`, `content`, `subject`, `subject_ac`, `reply_to`, `reply_to_ac`, `recipient`) VALUES
+        	   		(1,'Send mail to user','Live Support',0,'',0,'Dear {user_chat_nick},\r\n\r\n{additional_message}\r\n\r\nLive Support response:\r\n{messages_content}\r\n\r\nSincerely,\r\nLive Support Team\r\n','{name_surname} has responded to your request',	1,'',1,''),
+        	   		(2,'Support request from user',	'',	0,	'',	0,	'Hello,\r\n\r\nUser request data:\r\nName: {name}\r\nEmail: {email}\r\nPhone: {phone}\r\nDepartment: {department}\r\nIP: {ip}\r\n\r\nMessage:\r\n{message}\r\n\r\nAdditional data, if any:\r\n{additional_data}\r\n\r\nURL of page from which user has send request:\r\n{url_request}\r\n\r\nSincerely,\r\nLive Support Team',	'Support request from user',	0,	'',	0,	'{$adminEmail}');");
 
         	   $db->query("CREATE TABLE `lh_question` (
         	   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -298,6 +337,18 @@ switch ((int)$Params['user_parameters']['step_id']) {
         	   KEY `ip` (`ip`)
         	   ) DEFAULT CHARSET=utf8");
 
+        	   $db->query("CREATE TABLE `lh_chatbox` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `identifier` varchar(50) NOT NULL,
+				  `name` varchar(100) NOT NULL,
+				  `chat_id` int(11) NOT NULL,
+				  `active` int(11) NOT NULL,
+				  PRIMARY KEY (`id`),
+				  KEY `identifier` (`identifier`)
+				) DEFAULT CHARSET=utf8;");
+
+
+
         	   $db->query("CREATE TABLE IF NOT EXISTS `lh_canned_msg` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `msg` text NOT NULL,
@@ -337,6 +388,8 @@ switch ((int)$Params['user_parameters']['step_id']) {
                   PRIMARY KEY (`identifier`)
                 ) DEFAULT CHARSET=utf8;");
 
+        	   $randomHash = erLhcoreClassModelForgotPassword::randomPassword(9);
+
         	   $db->query("INSERT INTO `lh_chat_config` (`identifier`, `value`, `type`, `explain`, `hidden`) VALUES
                 ('tracked_users_cleanup',	'7',	0,	'How many days keep records of online users.',	0),
         	   	('list_online_operators', '0', '0', 'List online operators, 0 - no, 1 - yes.', '0'),
@@ -344,6 +397,8 @@ switch ((int)$Params['user_parameters']['step_id']) {
                 ('track_online_visitors',	'0',	0,	'Enable online site visitors tracking, 0 - no, 1 - yes',	0),
                 ('customer_company_name',	'Live Helper Chat',	0,	'Your company name - visible in bottom left corner',	0),
                 ('customer_site_url',	'http://livehelperchat.com',	0,	'Your site URL address',	0),
+        	   	('smtp_data',	'a:5:{s:4:\"host\";s:0:\"\";s:4:\"port\";s:2:\"25\";s:8:\"use_smtp\";i:0;s:8:\"username\";s:0:\"\";s:8:\"password\";s:0:\"\";}',	0,	'SMTP configuration',	1),
+        	    ('chatbox_data',	'a:6:{i:0;b:0;s:20:\"chatbox_auto_enabled\";i:0;s:19:\"chatbox_secret_hash\";s:9:\"{$randomHash}\";s:20:\"chatbox_default_name\";s:7:\"Chatbox\";s:17:\"chatbox_msg_limit\";i:50;s:22:\"chatbox_default_opname\";s:7:\"Manager\";}',	0,	'Chatbox configuration',	1),
                 ('start_chat_data',	'a:10:{i:0;b:0;s:21:\"name_visible_in_popup\";b:1;s:27:\"name_visible_in_page_widget\";b:1;s:19:\"name_require_option\";s:8:\"required\";s:22:\"email_visible_in_popup\";b:1;s:28:\"email_visible_in_page_widget\";b:1;s:20:\"email_require_option\";s:8:\"required\";s:24:\"message_visible_in_popup\";b:1;s:30:\"message_visible_in_page_widget\";b:1;s:22:\"message_require_option\";s:8:\"required\";}',	0,	'',	1),
                 ('application_name',	'a:6:{s:3:\"eng\";s:31:\"Live Helper Chat - live support\";s:3:\"lit\";s:26:\"Live Helper Chat - pagalba\";s:3:\"hrv\";s:0:\"\";s:3:\"esp\";s:0:\"\";s:3:\"por\";s:0:\"\";s:10:\"site_admin\";s:31:\"Live Helper Chat - live support\";}',	1,	'Support application name, visible in browser title.',	0),
                 ('geo_data', '', '0', '', '1')");
@@ -369,11 +424,12 @@ switch ((int)$Params['user_parameters']['step_id']) {
                 ) DEFAULT CHARSET=utf8;");
 
         	   //Default departament
-        	   $db->query("CREATE TABLE IF NOT EXISTS `lh_departament` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `name` varchar(100) NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) DEFAULT CHARSET=utf8;");
+        	   $db->query("CREATE TABLE `lh_departament` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `name` varchar(100) NOT NULL,
+				  `email` varchar(100) NOT NULL,
+				  PRIMARY KEY (`id`)
+				) DEFAULT CHARSET=utf8;");
 
         	   $Departament = new erLhcoreClassModelDepartament();
                $Departament->name = $form->DefaultDepartament;
@@ -555,8 +611,10 @@ switch ((int)$Params['user_parameters']['step_id']) {
                 // Operators rules and functions
                 $permissionsArray = array(
                     array('module' => 'lhuser',  'function' => 'selfedit'),
+                    array('module' => 'lhuser',  'function' => 'changeonlinestatus'),
                     array('module' => 'lhchat',  'function' => 'use'),
                     array('module' => 'lhchat',  'function' => 'singlechatwindow'),
+                    array('module' => 'lhchat',  'function' => 'allowopenremotechat'),
                     array('module' => 'lhchat',  'function' => 'allowchattabs'),
                     array('module' => 'lhfront', 'function' => 'use'),
                     array('module' => 'lhsystem','function' => 'use'),
@@ -565,7 +623,9 @@ switch ((int)$Params['user_parameters']['step_id']) {
                     array('module' => 'lhchat',  'function' => 'allowtransfer'),
                     array('module' => 'lhchat',  'function' => 'administratecannedmsg'),
                     array('module' => 'lhquestionary',  'function' => 'manage_questionary'),
-                    array('module' => 'lhxml',   'function' => '*')
+                    array('module' => 'lhfaq',   		'function' => 'manage_faq'),
+                    array('module' => 'lhchatbox',   	'function' => 'manage_chatbox'),
+                    array('module' => 'lhxml',   		'function' => '*')
                 );
 
                 foreach ($permissionsArray as $paramsPermission) {

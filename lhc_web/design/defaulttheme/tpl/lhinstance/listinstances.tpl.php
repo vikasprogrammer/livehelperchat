@@ -17,8 +17,8 @@
         <td><?php echo htmlspecialchars($departament->name)?></td>
         <td><?php echo htmlspecialchars($departament->remote_instance_id)?></td>
         <td><?php if ($departament->status == 1) : ?>Active<?php else : ?>Inactive<?php endif;?></td>
-        <td nowrap><a class="tiny button round" href="<?php echo erLhcoreClassDesign::baseurl('instance/editinstance')?>/<?php echo $departament->id?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/instance','Edit instance');?></a></td>
-        <td nowrap><a onclick="return confirm('<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('kernel/message','Are you sure?');?>')" class="tiny alert button round" href="<?php echo erLhcoreClassDesign::baseurl('instance/delete')?>/<?php echo $departament->id?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/instance','Delete instance');?></a></td>
+        <td nowrap><a class="small button round" href="<?php echo erLhcoreClassDesign::baseurl('instance/editinstance')?>/<?php echo $departament->id?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/instance','Edit instance');?></a></td>
+        <td nowrap><a onclick="return confirm('<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('kernel/message','Are you sure?');?>')" class="small alert button round" href="<?php echo erLhcoreClassDesign::baseurl('instance/delete')?>/<?php echo $departament->id?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('instance/instance','Delete instance');?></a></td>
     </tr>
 <?php endforeach; ?>
 </table>

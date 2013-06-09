@@ -1,3 +1,84 @@
+1.34v
+
+New features:
+1. Option to configure SMTP settings for mail
+2. Chrome dekstop notifications
+3. Allow user to change his online offline status
+
+1.33v
+
+New features:
+1. New permission for chat, now operators can have or not permission to open already opened chats. This disables reading other persons chats. Except for users who have permission.
+This permission takes effect only if user does not have permission to all chats.
+2. Leave a message functionality
+
+Enhancements:
+1. Added support for managing permission for extensions. Names will be listed in literal mode not in system mode.
+
+Bugfix:
+1. Avoid undefined index expand
+
+execute doc/update_db/update_23.sql
+
+1.32v
+
+1. Chatbox/Shoutbox module.
+2. Option to embed Chat, Shoutbox directly in page.
+
+execute doc/update_db/update_22.sql
+
+1.31v
+
+Feature release:
+1. Option to pass custom argument for chat, these arguments will be visible in chat form
+Example:
+<script type="text/javascript">
+var LHCChatOptions = {};
+LHCChatOptions.attr = new Array();
+LHCChatOptions.attr.push({'name':'Basket id','value':'<predefined value>','type':'text','size':12}); // 12 is 100% full row, 6 is 50%
+LHCChatOptions.attr.push({'name':'User ID','value':'<predefined value>','type':'hidden','size':0}); // hidden is invisible field, size just zero
+(function() {
+var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+po.src = 'http://<some_domain>/index.php/chat/getstatus/(position)/middle_right';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+</script>
+2. Option to prefill some form attributes in javascript
+<script type="text/javascript">
+LHCChatOptions.attr_prefill = new Array();
+LHCChatOptions.attr_prefill.push({'name':'email','value':'remdex@gmail.com'});
+LHCChatOptions.attr_prefill.push({'name':'phone','value':'370888888'});
+LHCChatOptions.attr_prefill.push({'name':'username','value':'Remigijus Kiminas'});
+(function() {
+var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+po.src = 'http://<some_domain>/index.php/chat/getstatus/(position)/middle_right';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+</script>
+3. Option to configure chat popup window width and height, same for chat widget also.
+4. Send mail to user, let say you have missed chat. But still you want to responde to user. So with this feature you will be able to do so.
+5. Dynamic widgets height and width, this will allow to fit content dynamically/ so even more improved usability.
+6. Improved compatibility with IE8
+7. Option to embed FAQ and Questionary module directly in page
+
+execute doc/update_db/update_21.sql
+
+1.30v
+
+Feature release:
+1. Upgrade to Foundation 4 version
+2. RTL language support
+
+1.29v
+
+Feature release:
+1. FAQ module, show FAQ questions to your customers based on their URL.
+2. Custom position from top if middle right or middle right is chosen.
+3. Dutch translation, thanks to Robin Stuivenberg
+4. MacOS bundle, requires QT 4.7 or 4.8 runtime library. Anyone can compile without dependency?
+
+execute doc/update_db/update_20.sql
+
 1.28v
 
 Feature release:

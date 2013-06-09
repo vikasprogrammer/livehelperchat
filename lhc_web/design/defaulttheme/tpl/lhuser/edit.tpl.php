@@ -57,16 +57,16 @@
 
 <hr>
 
-<dl class="tabs">
-    <dd class="active"><a href="#simpleDepartmetns1" >Departments</a></dd>
-    <dd><a href="#simpleDepartmetns2">Instances</a></dd>
-</dl>
 
-<ul class="tabs-content">
-  <li id="simpleDepartmetns1Tab" class="active">
-  		<h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assigned departments');?></h5>
+<div class="section-container auto" data-section>
 
-		<?php if (isset($account_updated_departaments) && $account_updated_departaments == 'done') : $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Selected departments were removed'); ?>
+
+  <section>
+    <p class="title" data-section-title><a href="#panel3"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assigned departments');?></a></p>
+    <div class="content" data-section-content>
+
+    	<div>
+	 	<?php if (isset($account_updated_departaments) && $account_updated_departaments == 'done') : $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Selected departments were removed'); ?>
 			<?php include(erLhcoreClassDesign::designtpl('lhkernel/alert_success.tpl.php'));?>
 		<?php endif; ?>
 
@@ -75,19 +75,23 @@
 		    if ($departament->all_departments == false) : ?>
 		        <label><input type="checkbox" name="UserDepartament[]" value="<?php echo $departament->dep_id?>" checked="checked"/><?php echo htmlspecialchars($departament->department)?> (<?php echo htmlspecialchars($departament->instance)?>)</label>
 		    <?php endif;endforeach; ?>
-
 		    <ul class="button-group radius">
 				<li><input type="submit" class="small button" name="RemoveSelectedDepartments" value="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Remove selected');?>"/></li>
 				<li><a href="#" class="small button" onclick="return $.colorbox({'iframe':true,height:'500px',width:'500px', href:'<?php echo erLhcoreClassDesign::baseurl('departament/assigntouser')?>/<?php echo $user->id?>'});"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assign department');?></a></li>
 			</ul>
-
 		</form>
+		</div>
 
-  </li>
-  <li id="simpleDepartmetns2Tab">
-		<h5><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assigned instances');?></h5>
 
-		<?php if (isset($account_updated_instances) && $account_updated_instances == 'done') : $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Removed selected instances from user'); ?>
+    </div>
+  </section>
+
+  <section>
+    <p class="title" data-section-title><a href="#panel3"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assigned instances');?></a></p>
+    <div class="content" data-section-content>
+
+    	<div>
+	  	<?php if (isset($account_updated_instances) && $account_updated_instances == 'done') : $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Removed selected instances from user'); ?>
 			<?php include(erLhcoreClassDesign::designtpl('lhkernel/alert_success.tpl.php'));?>
 		<?php endif; ?>
 
@@ -105,9 +109,17 @@
 			</ul>
 
 		</form>
+		</div>
 
-  </li>
-</ul>
+    </div>
+  </section>
+
+
+</div>
+
+
+
+
 
 
 

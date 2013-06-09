@@ -19,6 +19,10 @@ $def->properties['instance_id']->columnName   = 'instance_id';
 $def->properties['instance_id']->propertyName = 'instance_id';
 $def->properties['instance_id']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_INT;
 
+$def->properties['email'] = new ezcPersistentObjectProperty();
+$def->properties['email']->columnName   = 'email';
+$def->properties['email']->propertyName = 'email';
+$def->properties['email']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_STRING;
 
 return $def;
 

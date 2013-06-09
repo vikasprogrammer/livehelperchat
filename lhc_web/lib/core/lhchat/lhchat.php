@@ -522,7 +522,6 @@ class erLhcoreClassChat {
     	return self::getCount($filter);
     }
 
-
     public static function isOnline($dep_id = false, $instance = false)
     {
        $isOnlineUser = (int)erConfigClassLhConfig::getInstance()->getSetting('chat','online_timeout');
@@ -619,6 +618,25 @@ class erLhcoreClassChat {
        return $rows;
    }
 
+
+   /**
+    * All messages, which should get administrator/user for chatbox
+    *
+    * */
+   public static function getPendingMessagesChatbox($chat_id,$message_id)
+   {
+       $db = ezcDbInstance::get();
+       $stmt = $db->prepare('SELECT lh_msg.* FROM lh_msg INNER JOIN ( SELECT id FROM lh_msg WHERE chat_id = :chat_id AND id >= :message_id ORDER BY id ASC) AS items ON lh_msg.id = items.id');
+       $stmt->bindValue( ':chat_id',$chat_id);
+       $stmt->bindValue( ':message_id',$message_id);
+       $stmt->setFetchMode(PDO::FETCH_ASSOC);
+       $stmt->execute();
+       $rows = $stmt->fetchAll();
+
+       return $rows;
+   }
+
+
    /**
     * Gets chats messages, used to review chat etc.
     * */
@@ -640,11 +658,21 @@ class erLhcoreClassChat {
        $userData = $currentUser->getUserData(true);
 
        if ( $userData->all_departments == 0 ) {
+
             $userDepartaments = erLhcoreClassUserDep::getUserDepartaments($currentUser->getUserID());
 
             if (count($userDepartaments) == 0) return false;
 
-            if (in_array($chat->dep_id,$userDepartaments)) return true;
+            if (in_array($chat->dep_id,$userDepartaments)) {
+
+            	if ($currentUser->hasAccessTo('lhchat','allowopenremotechat') == true){
+            		return true;
+            	} elseif ($chat->user_id == 0 || $chat->user_id == $currentUser->getUserID()) {
+            		return true;
+            	}
+
+            	return false;
+            }
 
             return false;
        }

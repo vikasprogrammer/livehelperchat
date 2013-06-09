@@ -114,6 +114,16 @@ $def->properties['last_msg_id']->columnName   = 'last_msg_id';
 $def->properties['last_msg_id']->propertyName = 'last_msg_id';
 $def->properties['last_msg_id']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_INT;
 
+$def->properties['mail_send'] = new ezcPersistentObjectProperty();
+$def->properties['mail_send']->columnName   = 'mail_send';
+$def->properties['mail_send']->propertyName = 'mail_send';
+$def->properties['mail_send']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_INT;
+
+$def->properties['additional_data'] = new ezcPersistentObjectProperty();
+$def->properties['additional_data']->columnName   = 'additional_data';
+$def->properties['additional_data']->propertyName = 'additional_data';
+$def->properties['additional_data']->propertyType = ezcPersistentObjectProperty::PHP_TYPE_STRING;
+
 return $def;
 
 ?>

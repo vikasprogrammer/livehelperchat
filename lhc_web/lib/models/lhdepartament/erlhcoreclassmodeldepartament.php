@@ -8,6 +8,7 @@ class erLhcoreClassModelDepartament {
                'id'       		=> $this->id,
                'name'     		=> $this->name,
                'instance_id'    => $this->instance_id,
+               'email'     		=> $this->email,
        );
    }
 
@@ -191,6 +192,8 @@ class erLhcoreClassModelDepartament {
     public $id = null;
     public $name = '';
     public $instance_id = 0;
+    public $email = '';
+
 }
 
 ?>

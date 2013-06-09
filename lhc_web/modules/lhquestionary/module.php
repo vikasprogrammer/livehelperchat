@@ -1,6 +1,6 @@
 <?php
 
-$Module = array( "name" => "Questionary module");
+$Module = array( "name" => "Questionary/Voting");
 
 $ViewList = array();
 
@@ -44,13 +44,14 @@ $ViewList['getstatus'] = array(
 		'script' => 'getstatus.php',
 		'params' => array(),
 		'functions' => array( ),
-		'uparams' => array('position','expand')
+		'uparams' => array('position','expand','top','units','width','height')
 );
 
 $ViewList['votingwidget'] = array(
 		'script' => 'votingwidget.php',
 		'params' => array(),
-		'functions' => array( )
+		'uparams' => array('mode'),
+		'functions' => array()
 );
 
 $ViewList['votingwidgetclosed'] = array(
@@ -70,6 +71,18 @@ $ViewList['edit'] = array(
 		'params' => array('id',),
 		'uparams' => array('tab','option_id'),
 		'functions' => array( 'manage_questionary' )
+);
+
+$ViewList['embed'] = array(
+		'script' => 'embed.php',
+		'params' => array(),
+		'functions' => array()
+);
+
+$ViewList['embedcode'] = array(
+		'script' => 'embedcode.php',
+		'params' => array(),
+		'functions' => array('manage_questionary')
 );
 
 $FunctionList['manage_questionary'] = array('explain' => 'Allow user to manage questionary');

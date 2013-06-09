@@ -35,10 +35,10 @@ $ViewList['assigntouser'] = array(
 );
 
 $FunctionList['list'] = array('explain' => 'Access to list departments');
-$FunctionList['create'] = array('explain' => 'Create new department');
-$FunctionList['edit'] = array('explain' => 'Edit department');
-$FunctionList['delete'] = array('explain' => 'Allow to delete department');
-$FunctionList['selfedit'] = array('explain' => 'Allow user to choose his departments');
 $FunctionList['manage_instance'] = array('explain' => 'Allow user to manage departments at instance level');
+$FunctionList['create'] = array('explain' => 'Permission to create a new department');
+$FunctionList['edit'] = array('explain' => 'Permission to edit department');
+$FunctionList['delete'] = array('explain' => 'Permission to delete department');
+$FunctionList['selfedit'] = array('explain' => 'Allow user to choose his departments');
 
 ?>
