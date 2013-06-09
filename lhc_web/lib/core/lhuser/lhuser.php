@@ -67,6 +67,8 @@ class erLhcoreClassUser{
        $this->authentication->session = $this->session;
 
        if ( !$this->authentication->run() ) {
+       		//echo "cound not authentificate";
+       		//exit;
             return false;
             // build an error message based on $status
        } else {
@@ -150,7 +152,7 @@ class erLhcoreClassUser{
 	   	}
    }
 
-   function logout()
+function logout()
    {
        if (isset($_SESSION['lhc_access_array'])){ unset($_SESSION['lhc_access_array']); }
        if (isset($_SESSION['lhc_access_timestamp'])){ unset($_SESSION['lhc_access_timestamp']); }

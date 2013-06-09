@@ -59,6 +59,8 @@ class erTranslationClassLhTranslation
 
     public function getTranslation($context, $string, $params = array())
     {
+	
+	
         if ($this->languageCode == 'en_EN') { 
             return $this->insertarguments($string,$params);
         }
