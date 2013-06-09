@@ -59,12 +59,9 @@
 
 
 <div class="section-container auto" data-section>
-
-
   <section>
     <p class="title" data-section-title><a href="#panel3"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assigned departments');?></a></p>
     <div class="content" data-section-content>
-
     	<div>
 	 	<?php if (isset($account_updated_departaments) && $account_updated_departaments == 'done') : $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Selected departments were removed'); ?>
 			<?php include(erLhcoreClassDesign::designtpl('lhkernel/alert_success.tpl.php'));?>
@@ -81,15 +78,11 @@
 			</ul>
 		</form>
 		</div>
-
-
     </div>
   </section>
-
   <section>
     <p class="title" data-section-title><a href="#panel3"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('user/edit','Assigned instances');?></a></p>
     <div class="content" data-section-content>
-
     	<div>
 	  	<?php if (isset($account_updated_instances) && $account_updated_instances == 'done') : $msg = erTranslationClassLhTranslation::getInstance()->getTranslation('user/account','Removed selected instances from user'); ?>
 			<?php include(erLhcoreClassDesign::designtpl('lhkernel/alert_success.tpl.php'));?>
@@ -110,11 +103,8 @@
 
 		</form>
 		</div>
-
     </div>
   </section>
-
-
 </div>
 
 
