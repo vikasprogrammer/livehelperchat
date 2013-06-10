@@ -1,4 +1,5 @@
 <br>
+<div class="content-white" style="padding:10px;border:1px solid #CCC;">
 
 <dl class="tabs w700">
     <dd <?php if ($tab == '') : ?>class="active"<?php endif;?>><a href="<?php echo erLhcoreClassDesign::baseurl('chat/transferchat')?>/<?php echo $chat->id?>"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/transferchat','Transfer to user');?></a></dd>
@@ -11,6 +12,7 @@
     	<dd <?php if ($tab == 'instance') : ?>class="active"<?php endif;?>><a href="<?php echo erLhcoreClassDesign::baseurl('chat/transferchat')?>/<?php echo $chat->id?>/(tab)/instance"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/transferchat','Transfer to instance');?></a></dd>
     <?php endif;?>
 </dl>
+
 
 <div id="transfer-block-<?php echo $chat->id?>"></div>
 
@@ -92,3 +94,4 @@
 </form>
 <br>
 <br>
+</div>

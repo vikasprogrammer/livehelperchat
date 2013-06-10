@@ -16,6 +16,11 @@ body {
 	padding-top:10px;
 }
 
+.content-white{
+	background-color: rgb(255, 255, 255); /* The Fallback */
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
 .params-list li {
 	float:left;
 	font-size:0.75em;
