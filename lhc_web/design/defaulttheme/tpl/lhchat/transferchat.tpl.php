@@ -54,7 +54,7 @@
 		<h4><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chat/transferchat','Departments');?></h4>
 
   		<?php foreach ($items as $departament) : ?>
-	        <label><input type="radio" <?php if ($departament->id == $chat->dep_id) : ?>disabled="disabled"<?php endif;?> name="DepartamentID<?php echo $chat->id?>" value="<?php echo $departament->id?>" /> <?php echo htmlspecialchars($departament->name)?></label>
+	        <label><input type="radio" <?php if ($departament->id == $chat->dep_id) : ?>disabled="disabled"<?php endif;?> name="DepartamentID<?php echo $chat->id?>" value="<?php echo $departament->id?>" /> <?php echo htmlspecialchars($departament->name)?> <?php if ($departament->all_instances === false) : ?>(<?php echo htmlspecialchars($departament->name) ?>)<?php else : ?>(global department)<?php endif;?></label>
 	    <?php endforeach; ?>
 
 	    <?php if (isset($pages)) : ?>
