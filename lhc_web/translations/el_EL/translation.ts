@@ -237,6 +237,10 @@
       <translation>Αποστολή</translation>
     </message>
     <message>
+      <source>BB Code</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <source>Close</source>
       <translation>Κλείσιμο</translation>
     </message>
@@ -1142,6 +1146,10 @@
     <message>
       <source>City name server variable</source>
       <translation>Τιμή εξυπηρετητή ονομάτων πόλης</translation>
+    </message>
+    <message>
+      <source>Region name server variable</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <source>Latitude variable</source>
@@ -4710,6 +4718,10 @@
       <translation>Παραληπτών ηλεκτρονικού ταχυδρομείου, αυτό χρησιμοποιείται αν η αίτηση δεν μπόρεσε να προσδιορίσει ποιος πρέπει να λαμβάνει ένα μήνυμα ηλεκτρονικού ταχυδρομείου.</translation>
     </message>
     <message>
+      <source>BCC recipients, can be separated by comma.</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <source>Content</source>
       <translation>Περιεχόμενο</translation>
     </message>
@@ -4788,6 +4800,64 @@
     <message>
       <source>Please enter valid file type!</source>
       <translation>Παρακαλούμε, εισάγετε έγκυρο αρχείο τύπου!</translation>
+    </message>
+  </context>
+  <context>
+    <name>chat/screenshot</name>
+    <message>
+      <source>Screenshot</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Take user screenshot</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Refresh</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Taken</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Empty...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Perhaps screenshot is under way or screenshot is not supported on client browser, click refresh to check for a screenshot</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Screenshot ready...</source>
+      <translation type="unfinished"/>
+    </message>
+  </context>
+  <context>
+    <name>chat/bbcodeinsert</name>
+    <message>
+      <source>Image</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Link title image</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Link</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Link title</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Bold</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Italic</source>
+      <translation type="unfinished"/>
     </message>
   </context>
 </TS>

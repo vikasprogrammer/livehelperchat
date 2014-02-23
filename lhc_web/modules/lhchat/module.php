@@ -116,6 +116,16 @@ $ViewList['refreshonlineinfo'] = array(
     'functions' => array( 'use' )
 );
 
+$ViewList['checkscreenshot'] = array(
+    'params' => array('chat_id'),
+    'functions' => array( 'use' )
+);
+
+$ViewList['checkscreenshotonline'] = array(
+    'params' => array('online_id'),
+    'functions' => array( 'use' )
+);
+
 $ViewList['operatortyping'] = array(
     'params' => array('chat_id','status'),
     'functions' => array( 'use' )
@@ -160,7 +170,17 @@ $ViewList['pendingchats'] = array(
 $ViewList['addmsgadmin'] = array(
     'params' => array('chat_id'),
     'functions' => array( 'use' )
-    );
+);
+
+$ViewList['addoperation'] = array(
+    'params' => array('chat_id'),
+    'functions' => array( 'use' )
+);
+
+$ViewList['addonlineoperation'] = array(
+    'params' => array('online_user_id'),
+    'functions' => array( 'use' )
+);
 
 $ViewList['saveremarks'] = array(
     'params' => array('chat_id'),
@@ -257,8 +277,12 @@ $ViewList['printchat'] = array(
     'params' => array('chat_id','hash')
 );
 
-$ViewList['sendchat'] = array(
-		'params' => array('chat_id','hash')
+$ViewList['printchat'] = array(
+    'params' => array('chat_id','hash')
+);
+
+$ViewList['bbcodeinsert'] = array(
+		'params' => array()
 );
 
 $ViewList['chatwidgetchat'] = array(

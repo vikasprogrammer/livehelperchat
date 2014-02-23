@@ -58,7 +58,7 @@
     <name>ChatWidget</name>
     <message>
         <source>Live helper chat - chat</source>
-        <translation>Ayudante de chat en vivo - Chat</translation>
+        <translation>Chat</translation>
     </message>
 </context>
 <context>
@@ -91,7 +91,7 @@
     <name>ChatRoomsWidget</name>
     <message>
         <source>Live helper chat - chat rooms</source>
-        <translation>Vivo ayudante chat - salas de chat</translation>
+        <translation>Salas de chat</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Ok</source>
-        <translation>bueno</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -118,7 +118,7 @@
     </message>
     <message>
         <source>Host</source>
-        <translation>anfitrión</translation>
+        <translation>Host</translation>
     </message>
     <message>
         <source>Autologin</source>
@@ -137,7 +137,7 @@
     </message>
     <message>
         <source>The host field is empty!</source>
-        <translation>El campo de host está vacía!</translation>
+        <translation>El campo de host está vacío!</translation>
     </message>
     <message>
         <source>The password field is empty!</source>
@@ -152,7 +152,7 @@
     <name>LhcTransferDialog</name>
     <message>
         <source>Chat transfer</source>
-        <translation>chatear transferencia</translation>
+        <translation>Transferencia de chat</translation>
     </message>
     <message>
         <source>Online users</source>
@@ -160,7 +160,7 @@
     </message>
     <message>
         <source>Ok</source>
-        <translation>bueno</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -171,11 +171,11 @@
     <name>ChatRoomsWindow</name>
     <message>
         <source>Add chat</source>
-        <translation>Añadir chatear</translation>
+        <translation>Añadir chat</translation>
     </message>
 	<message>
         <source>Accept chat</source>
-        <translation>Aceptar chatear</translation>
+        <translation>Aceptar chat</translation>
     </message>
     <message>
         <source>Open in a new window</source>
@@ -191,15 +191,15 @@
     </message>
     <message>
         <source>Close chat</source>
-        <translation>Cerrar chatear</translation>
+        <translation>Cerrar chat</translation>
     </message>
     <message>
         <source>Delete chat</source>
-        <translation>Eliminar chatear</translation>
+        <translation>Eliminar chat</translation>
     </message>
     <message>
         <source>Reject chat</source>
-        <translation>Rechazar chatear</translation>
+        <translation>Rechazar chat</translation>
     </message>
     <message>
         <source>Pending chats</source>
@@ -234,7 +234,7 @@
     <name>ChatWindow</name>
     <message>
         <source>User left chat</source>
-        <translation>Usuario dejó chatear</translation>
+        <translation>Usuario abandonó el chat</translation>
     </message>
 	<message>
         <source>Send</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>User joined chat</source>
-        <translation>Usuario Registrado chatear</translation>
+        <translation>Usuario se unió al chat</translation>
     </message>
     <message>
         <source>Actions</source>
@@ -289,7 +289,7 @@
     <name>MainWindow</name>
     <message>
         <source>Live helper chat</source>
-        <translation>Vivir ayudante de chat</translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>New request</source>
@@ -297,19 +297,19 @@
     </message>
     <message>
         <source>You have a new chat pending. To start the chat click me.</source>
-        <translation>Usted tiene una nueva conversación pendiente. Para iniciar el chat me haz clic.</translation>
+        <translation>Usted tiene una nueva conversación pendiente. Para iniciar el chat haz clic aquí.</translation>
     </message>
     <message>
         <source>A new chat has been transferred to you. To start the chat click me.</source>
-        <translation>Un nuevo chat se ha transferido a usted. Para iniciar el chat me haz clic.</translation>
+        <translation>Le han transferido un nuevo chat. Para iniciar el chat haga clic aquí</translation>
     </message>
     <message>
         <source>Waiting for action...</source>
-        <translation>Esperando la actuación ...</translation>
+        <translation>Esperando ...</translation>
     </message>
     <message>
         <source>&amp;Restore</source>
-        <translation>y restauración</translation>
+        <translation>&amp;Restore</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Chat rooms</source>
-        <translation>Las salas de chat</translation>
+        <translation>Salas de chat</translation>
     </message>
     <message>
         <source>About</source>

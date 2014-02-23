@@ -237,6 +237,10 @@
       <translation>Enviar</translation>
     </message>
     <message>
+      <source>BB Code</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <source>Close</source>
       <translation>Fechar</translation>
     </message>
@@ -1144,6 +1148,10 @@
       <translation>Variável nome da cidade do servidor</translation>
     </message>
     <message>
+      <source>Region name server variable</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <source>Latitude variable</source>
       <translation>Variável latitude</translation>
     </message>
@@ -1185,11 +1193,11 @@
     </message>
     <message>
       <source>Use PHP-GeoIP module</source>
-      <translation type="unfinished"/>
+      <translation>Usar o módulo PHP-GeoIP</translation>
     </message>
     <message>
       <source>Support for PHP-GeoIP detected</source>
-      <translation type="unfinished"/>
+      <translation>Detectado suporte para PHP-GeoIP</translation>
     </message>
     <message>
       <source>Requests will be comming from</source>
@@ -1493,7 +1501,7 @@
     </message>
     <message>
       <source>Setting service provider failed, please check that you have installed php-GeoIP module and GeoIPCity.dat file is available!</source>
-      <translation type="unfinished"/>
+      <translation>Provedor de serviços de configuração falhou, por favor, verifique se você instalou módulo php-GeoIP e arquivo GeoIPCity.dat está disponível!</translation>
     </message>
     <message>
       <source>Please choose a service provider!</source>
@@ -3957,15 +3965,15 @@
     </message>
     <message>
       <source>Date format E.g (Y-m-d)</source>
-      <translation type="unfinished"/>
+      <translation>Formato de data Ex.: (Y-m-d)</translation>
     </message>
     <message>
       <source>Full date format E.g (Y-m-d H:i:s)</source>
-      <translation type="unfinished"/>
+      <translation>Formato de data completa Ex.: (Y-m-d H: i: s)</translation>
     </message>
     <message>
       <source>Hour format E.g (H:i:s)</source>
-      <translation type="unfinished"/>
+      <translation>Formato de hora Ex.: (H:i:s)</translation>
     </message>
     <message>
       <source>Live Helper Chat update</source>
@@ -4710,6 +4718,10 @@
       <translation>E-mail do destinatário, isto é usado se o aplicativo não pôde determinar quem deve receber um e-mail.</translation>
     </message>
     <message>
+      <source>BCC recipients, can be separated by comma.</source>
+      <translation>Destinatários BCC, podem ser separados por vírgulas.</translation>
+    </message>
+    <message>
       <source>Content</source>
       <translation>Conteúdo</translation>
     </message>
@@ -4788,6 +4800,64 @@
     <message>
       <source>Please enter valid file type!</source>
       <translation>Por favor insira um tipo de arquivo válido!</translation>
+    </message>
+  </context>
+  <context>
+    <name>chat/screenshot</name>
+    <message>
+      <source>Screenshot</source>
+      <translation>Captura de tela</translation>
+    </message>
+    <message>
+      <source>Take user screenshot</source>
+      <translation>Capturar a tela do usuário</translation>
+    </message>
+    <message>
+      <source>Refresh</source>
+      <translation>Atualizar</translation>
+    </message>
+    <message>
+      <source>Taken</source>
+      <translation>Capturado</translation>
+    </message>
+    <message>
+      <source>Empty...</source>
+      <translation>Vazio...</translation>
+    </message>
+    <message>
+      <source>Perhaps screenshot is under way or screenshot is not supported on client browser, click refresh to check for a screenshot</source>
+      <translation>Talvez a captura de tela esteja em andamento ou a captura de tela não é suportada no browser do cliente, clique em Atualizar para verificar se há uma imagem</translation>
+    </message>
+    <message>
+      <source>Screenshot ready...</source>
+      <translation>Captura de tela pronta...</translation>
+    </message>
+  </context>
+  <context>
+    <name>chat/bbcodeinsert</name>
+    <message>
+      <source>Image</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Link title image</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Link</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Link title</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Bold</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Italic</source>
+      <translation type="unfinished"/>
     </message>
   </context>
 </TS>

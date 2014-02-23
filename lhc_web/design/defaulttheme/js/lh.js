@@ -480,7 +480,19 @@ function lh(){
         				inst.operatorTyping = false;
         			    $('#id-operator-typing').fadeOut();
         			}
-
+        			
+        			// Execute pending operations
+        			if (data.op != '') {
+	   	    			 $.each(data.op,function(i,item) {
+	   	    				 	 if (inst.isWidgetMode) {
+	   	    				 		 parent.postMessage(item, '*');
+	   	    					 } else if (window.opener) {
+	   	    						 window.opener.postMessage(item, '*');	  
+	   	    					 };
+	   	    			 });	    			
+        			};	
+        			
+        			
 	           } else {
 	               $('#status-chat').html(data.status);
 	               $('#ChatMessageContainer').remove();
@@ -924,8 +936,7 @@ function lh(){
 	                   $('#status-chat').html(data.result);
 	               }
 
-	               if (data.ru != '') {
-	            	   inst.userclosedchatembed();
+	               if (data.ru != '') {	            	   
 	            	   document.location = data.ru;
 	               }
 	               
@@ -1535,6 +1546,53 @@ function lh(){
             }}).prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
     };
+    
+    this.addExecutionCommand = function(online_user_id,operation) {
+    	$.postJSON(this.wwwDir + 'chat/addonlineoperation/' + online_user_id,{'operation':operation}, function(data){
+    		if (LHCCallbacks.addExecutionCommand) {
+   	        	LHCCallbacks.addExecutionCommand(online_user_id);
+   	        };
+    	});
+    	if (operation == 'lhc_screenshot') {
+    		$('#user-screenshot-container').html('').addClass('screenshot-pending');
+    		var inst = this;
+    		setTimeout(function(){
+    			inst.updateScreenshotOnline(online_user_id);
+    		},15000);    		
+    	};
+    };
+    
+    this.addRemoteCommand = function(chat_id,operation) {
+    	$.postJSON(this.wwwDir + 'chat/addoperation/' + chat_id,{'operation':operation}, function(data){
+    		if (LHCCallbacks.addRemoteCommand) {
+   	        	LHCCallbacks.addRemoteCommand(chat_id);
+   	        };
+    	});    	
+    	if (operation == 'lhc_screenshot') {
+    		$('#user-screenshot-container').html('').addClass('screenshot-pending');
+    		var inst = this;
+    		setTimeout(function(){
+    			inst.updateScreenshot(chat_id);
+    		},5000);    		
+    	};
+    };
+    
+    this.updateScreenshot = function(chat_id) {
+    	$('#user-screenshot-container').html('').addClass('screenshot-pending');
+    	$.get(this.wwwDir + 'chat/checkscreenshot/' + chat_id,function(data){
+    		$('#user-screenshot-container').html(data);
+    		$('#user-screenshot-container').removeClass('screenshot-pending');
+    	}); 
+    };
+
+    this.updateScreenshotOnline = function(online_id) {
+    	$('#user-screenshot-container').html('').addClass('screenshot-pending');
+    	$.get(this.wwwDir + 'chat/checkscreenshotonline/' + online_id,function(data){
+    		$('#user-screenshot-container').html(data);
+    		$('#user-screenshot-container').removeClass('screenshot-pending');
+    	}); 
+    };
+
 }
 
 var lhinst = new lh();
